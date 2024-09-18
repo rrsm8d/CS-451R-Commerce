@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "3o4ZJjl1cEkpWuPGySo+uGeKDvID6CftmmS/CUFYsjr5J7DOonrSXhpQSixqDy2MY0GZ4PEoWkT+dylZ+l+8FA==",
+  "success": true,
+  "projectFilePath": "/home/kosmosloss/Documents/Coding/CS-451R-Commerce/CS-451R-Commerce.csproj",
+  "expectedPackageFiles": [
+    "/home/kosmosloss/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.8/microsoft.aspnetcore.app.ref.8.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,4 @@
+# Ignore user-specific files
+BlazorApp/.vs/
+BlazorApp/.vscode/
+BlazorApp/.idea/

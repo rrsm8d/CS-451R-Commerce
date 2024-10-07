@@ -1,5 +1,8 @@
+/*The global css file*/
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    font-family: Arial, sans-serif; /* Changed to match CommerceBank (i think) - Richard*/
 }
 
 a, .btn-link {

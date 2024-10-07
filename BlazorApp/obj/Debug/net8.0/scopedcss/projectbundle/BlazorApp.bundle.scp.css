@@ -201,6 +201,51 @@ main[b-qgsvw684bo] {
         overflow-y: auto;
     }
 }
+/* _content/BlazorApp/Components/Pages/Home.razor.rz.scp.css */
+/* Home Page */
+
+.welcome-container[b-7gt2111kuu] {
+    padding-top: 2rem;
+    padding-left: 2rem;
+}
+
+.welcome-title[b-7gt2111kuu] {
+    font-size: 48px;
+}
+
+.budgeting[b-7gt2111kuu] {
+    color: green;
+}
+
+.welcome-description[b-7gt2111kuu] {
+    font-size: 18px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.note[b-7gt2111kuu] {
+    font-size: 18px;
+    font-style: italic;
+}
+
+/* Button Styles */
+.login-button[b-7gt2111kuu] {
+    background-color: #00694e; /* Green background similar to the image */
+    color: white;
+    border: none;
+    border-radius: 30px; /* Rounded corners */
+    padding: 10px 30px; /* Padding for size */
+    font-size: 18px;
+    cursor: pointer;
+}
+
+    .login-button:hover[b-7gt2111kuu] {
+        background-color: #00553d; /* Slightly darker green on hover */
+    }
+
+    .login-button:focus[b-7gt2111kuu] {
+        outline: none; /* Remove the default focus outline */
+    }
 /* _content/BlazorApp/Components/Pages/Login.razor.rz.scp.css */
 /* Login page */
 

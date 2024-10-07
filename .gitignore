@@ -2,5 +2,4 @@
 BlazorApp/.vs/
 BlazorApp/.vscode/
 BlazorApp/.idea/
-/.vs
-/BlazorApp/.vs
+.vs/

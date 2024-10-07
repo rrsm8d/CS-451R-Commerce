@@ -58,3 +58,5 @@ C:\Users\Greg\Source\Repos\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\refint\Bl
 C:\Users\Greg\Source\Repos\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\BlazorApp.pdb
 C:\Users\Greg\Source\Repos\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\BlazorApp.genruntimeconfig.cache
 C:\Users\Greg\Source\Repos\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\ref\BlazorApp.dll
+C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\scopedcss\Components\Pages\Login.razor.rz.scp.css
+C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css

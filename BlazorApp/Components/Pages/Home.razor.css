@@ -1,8 +1,13 @@
-﻿/* Home Page */
+﻿/* Home Page Styles */
 
 .welcome-container {
-    padding-top: 2rem;
-    padding-left: 2rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.welcome-left {
+    flex: 1; /* Adjusts the left side to take up more space */
 }
 
 .welcome-title {
@@ -24,21 +29,98 @@
     font-style: italic;
 }
 
-/* Button Styles */
+/* Login Button */
+.login-button-container {
+    margin-top: 1.5rem; /* Space above the button */
+}
+
 .login-button {
-    background-color: #00694e; /* Green background similar to the image */
+    background-color: #00694e;
     color: white;
     border: none;
-    border-radius: 30px; /* Rounded corners */
-    padding: 10px 30px; /* Padding for size */
+    border-radius: 30px;
+    padding: 10px 30px;
     font-size: 18px;
     cursor: pointer;
 }
 
     .login-button:hover {
-        background-color: #00553d; /* Slightly darker green on hover */
+        background-color: #00553d;
     }
 
     .login-button:focus {
-        outline: none; /* Remove the default focus outline */
+        outline: none;
     }
+
+/* Transaction Box Styles */
+.transaction-box {
+    background-color: #004c70; /* Blue background */
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 350px; /* Adjust the width of the transaction box */
+    margin-left: 20px; /* Adds space between the left and the transaction box */
+}
+
+.monthly-income {
+    background-color: #00694e;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .monthly-income span {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .monthly-income p {
+        margin: 0;
+        font-size: 16px;
+    }
+
+.transactions-container {
+    background-color: #005982; /* Slightly lighter blue for the transaction area */
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #006994; /* Light border between transactions */
+}
+
+.transaction-name {
+    font-size: 16px;
+}
+
+.transaction-amount {
+    font-size: 16px;
+    color: #ff4f4f; /* Red color for negative amounts */
+}
+
+.set-goals-button {
+    background-color: #00694e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    width: 100%;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+}
+
+    .set-goals-button:hover {
+        background-color: #00553d;
+    }
+
+.transaction-note {
+    font-size: 14px;
+    margin-top: 10px;
+    font-style: italic;
+}

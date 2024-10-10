@@ -1,47 +1,47 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
       "PackagePath": "staticwebassets\\BlazorApp.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgHorizontal.jpg",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgHorizontal.jpg",
       "PackagePath": "staticwebassets\\Assets\\Backgrounds\\CommerceBgHorizontal.jpg"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgHorizontal2.png",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgHorizontal2.png",
       "PackagePath": "staticwebassets\\Assets\\Backgrounds\\CommerceBgHorizontal2.png"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgVertical.jpg",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgVertical.jpg",
       "PackagePath": "staticwebassets\\Assets\\Backgrounds\\CommerceBgVertical.jpg"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgVertical2.png",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Backgrounds\\CommerceBgVertical2.png",
       "PackagePath": "staticwebassets\\Assets\\Backgrounds\\CommerceBgVertical2.png"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Logos\\CommerceLogo.png",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Logos\\CommerceLogo.png",
       "PackagePath": "staticwebassets\\Assets\\Logos\\CommerceLogo.png"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Logos\\CommerceLogo2.png",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\Assets\\Logos\\CommerceLogo2.png",
       "PackagePath": "staticwebassets\\Assets\\Logos\\CommerceLogo2.png"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\app.css",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {

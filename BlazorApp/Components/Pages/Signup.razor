@@ -1,6 +1,33 @@
 ﻿@page "/signup"
 
-<h3>Signup</h3>
+
+<div class="signup-container">
+
+    <h1>Signup</h1>
+
+    <p style="text-align: center;">
+        New here? Create a new account! <br />
+        <b>(Passwords must be at least 8 characters in length)</b>
+    </p>
+
+    <!--TO-DO: Change action path when ready to implement.-->
+    <form class="signup-form" action="/auth.wtfgoeshere" id="myform">
+        <fieldset class="input-field">
+            <input class="input-box form-control" type="email" id="email" name="email" placeholder="Enter your email" required />
+            <input class="input-box form-control" type="password" id="password" name="password" placeholder="Enter a password" required />
+            <input class="input-box form-control" type="password" id="passwordretry" name="passwordretry" placeholder="Re-enter password" required />
+            <!--TO-DO: Add a little eye button to reveal password [Optional idk lol]-->
+        </fieldset>
+    </form>
+
+    <div class="button-container">
+        <button class="btn btn-primary signup-button" type="submit" form="myform">Signup!</button>
+        <a href="/signup" class="btn btn-primary login-button" type="button">Back to login.</a>
+    </div>
+
+</div>
+
+<!--TO-DO: Add on-click listeners to retrieve email, pass, & passretry from form to a temporary variable.-->
 
 @code {
 

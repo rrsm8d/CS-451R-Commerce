@@ -1,8 +1,8 @@
-﻿/* Login page */
+/* Signup page */
 
 /* Might change px units for widths and heights later */
 
-.login-container {
+.signup-container[b-j569fatkmf] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,11 +22,11 @@
     max-height: 500px;
 }
 
-.login-container > form > * {
-    margin-bottom: 16px; 
+.signup-container > form > *[b-j569fatkmf] {
+        margin-bottom: 16px;
 }
 
-.login-form {
+.signup-form[b-j569fatkmf] {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -34,7 +34,7 @@
     width: 100%;
 }
 
-.input-field {
+.input-field[b-j569fatkmf] {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -42,13 +42,13 @@
     width: 100%;
 }
 
-.input-box {
-    width: 40%;
+.input-box[b-j569fatkmf] {
+    width: 30%;
     height: 3rem;
     border-radius: 100px;
 }
 
-.button-container {
+.button-container[b-j569fatkmf] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +58,7 @@
     height: 10rem;
 }
 
-.login-button {
+.signup-button[b-j569fatkmf] {
     color: #FFFFFF;
     background-color: #4FA800;
     border-color: #FFFFFF;
@@ -68,7 +68,7 @@
     border-radius: 100px;
 }
 
-.signup-button {
+.login-button[b-j569fatkmf] {
     /* 
         Changing the button to an <a> for the purpose of hrefing to another page ruins the perfect alignment.
         This should fix it.
@@ -85,4 +85,3 @@
     height: 3rem;
     border-radius: 100px;
 }
-

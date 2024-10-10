@@ -446,8 +446,97 @@ main[b-qgsvw684bo] {
     color: #FFFFFF;
     background-color: #006747;
     border-color: #FFFFFF;
+
     width: 40%;
     height: 3rem;
     border-radius: 100px;
 }
 
+/* _content/BlazorApp/Components/Pages/Signup.razor.rz.scp.css */
+/* Signup page */
+
+/* Might change px units for widths and heights later */
+
+.signup-container[b-j569fatkmf] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background-color: #007AA3;
+    color: #FFFFFF;
+    margin: 5% 10%;
+    padding: 2% 5%;
+
+    border-radius: 15px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+
+    height: 500px;
+    max-height: 500px;
+}
+
+.signup-container > form > *[b-j569fatkmf] {
+        margin-bottom: 16px;
+}
+
+.signup-form[b-j569fatkmf] {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.input-field[b-j569fatkmf] {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    width: 100%;
+}
+
+.input-box[b-j569fatkmf] {
+    width: 30%;
+    height: 3rem;
+    border-radius: 100px;
+}
+
+.button-container[b-j569fatkmf] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    width: 100%;
+    height: 10rem;
+}
+
+.signup-button[b-j569fatkmf] {
+    color: #FFFFFF;
+    background-color: #4FA800;
+    border-color: #FFFFFF;
+
+    width: 40%;
+    height: 3rem;
+    border-radius: 100px;
+}
+
+.login-button[b-j569fatkmf] {
+    /* 
+        Changing the button to an <a> for the purpose of hrefing to another page ruins the perfect alignment.
+        This should fix it.
+    */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+    background-color: #006747;
+    border-color: #FFFFFF;
+
+    width: 40%;
+    height: 3rem;
+    border-radius: 100px;
+}

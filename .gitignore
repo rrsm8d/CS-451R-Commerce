@@ -1,5 +1,8 @@
 # Ignore user-specific files
+# Updated 10/13
 BlazorApp/.vs/
 BlazorApp/.vscode/
 BlazorApp/.idea/
+BlazorApp/bin/
+BlazorApp/obj/
 .vs/

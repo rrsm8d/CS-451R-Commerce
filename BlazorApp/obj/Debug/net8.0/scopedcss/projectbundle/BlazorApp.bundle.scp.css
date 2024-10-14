@@ -201,6 +201,106 @@ main[b-qgsvw684bo] {
         overflow-y: auto;
     }
 }
+/* _content/BlazorApp/Components/Pages/Dashboard.razor.rz.scp.css */
+.dashboard-container[b-ix3zhoijqt] {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 100vh; /* Set height to fill the viewport */
+}
+
+.dashboard-left[b-ix3zhoijqt] {
+    flex: 0 0 auto; /* Ensure the left section does not grow */
+    width: 416px; 
+    border-radius: 10px;
+    padding: 20px;
+    color: green; 
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; /* Ensure content stays above background */
+}
+
+.dashboard-right[b-ix3zhoijqt] {
+    flex: 1;
+    margin-left: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    color: green;
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; /* Ensure content stays above background */
+}
+
+/* Background image for the left section with 20% opacity */
+.dashboard-left[b-ix3zhoijqt]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/Assets/Backgrounds/CommerceBgVertical.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; /* 20% opacity */
+    z-index: -1; /* Behind the content */
+}
+
+/* Background image for the right section with 20% opacity */
+.dashboard-right[b-ix3zhoijqt]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/Assets/Backgrounds/CommerceBgHorizontal2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; /* 20% opacity */
+    z-index: -1; /* Behind the content */
+}
+
+/* Dropdown menu styling */
+.account-dropdown[b-ix3zhoijqt] {
+    width: 80%; 
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    color: #333; /* text color */
+    background-color: white; /* Default background color */
+    position: relative; /* Ensure it is above the pseudo-element */
+    z-index: 2; /* Ensure dropdown appears above the background */
+}
+
+    /* Style for the dropdown options */
+    .account-dropdown option[b-ix3zhoijqt] {
+        background-color: green; /* Green background for the options */
+        color: white; /* White text color for contrast */
+    }
+
+    /* Dropdown appearance when focused */
+    .account-dropdown:focus[b-ix3zhoijqt] {
+        outline: none;
+        border-color: green; /* Match the theme color */
+    }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .dashboard-left[b-ix3zhoijqt] {
+        width: 100%; /* Full width on smaller screens */
+        height: 200px; /* Adjust height for smaller devices */
+    }
+
+    .dashboard-right[b-ix3zhoijqt] {
+        width: 100%; /* Full width for the right section on smaller screens */
+        margin-left: 0; /* Remove the margin between the two sections */
+        height: auto; /* Let the height adjust naturally based on content */
+    }
+}
 /* _content/BlazorApp/Components/Pages/Home.razor.rz.scp.css */
 /* Home Page Styles */
 
@@ -261,7 +361,7 @@ main[b-qgsvw684bo] {
 
 /* Transaction Box Styles */
 .transaction-box[b-7gt2111kuu] {
-    background-color: #004c70; /* Blue background */
+    background-color: #007AA3; /* Blue background */
     color: white;
     padding: 20px;
     border-radius: 20px;
@@ -270,7 +370,7 @@ main[b-qgsvw684bo] {
 }
 
 .transactions-container[b-7gt2111kuu] {
-    background-color: #004c70;
+    background-color: #007AA3;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 20px;
@@ -290,7 +390,7 @@ main[b-qgsvw684bo] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
+Component.razor
 /* Transaction Icon Style */
 .transaction-icon[b-7gt2111kuu] {
     width: 40px;

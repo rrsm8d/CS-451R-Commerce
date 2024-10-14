@@ -1,0 +1,34 @@
+﻿@page "/dashboard"
+
+<PageTitle>Dashboard</PageTitle>
+
+<div class="dashboard-container">
+    <!-- Left Section (smaller, with background image) -->
+    <div class="dashboard-left">
+        <h3>Select an account to view</h3>
+        <!-- Dropdown menu -->
+        <div class="dropdown-container">
+            <select @onchange="OnAccountSelected" class="account-dropdown">
+                <option value="">-- Select Account --</option>
+                <option value="Checking">Checking Account</option>
+                <option value="Savings">Savings Account</option>
+                <option value="Credit">Credit Account</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="dashboard-right">
+        <!-- Content of the right section -->
+        <h3>No Account Selected</h3>
+    </div>
+</div>
+
+@code {
+    private void OnAccountSelected(ChangeEventArgs e)
+
+    {
+        var selectedAccount = e.Value.ToString();
+
+    }
+}

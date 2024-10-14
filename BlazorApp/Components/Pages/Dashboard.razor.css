@@ -1,0 +1,99 @@
+﻿.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 100vh; /* Set height to fill the viewport */
+}
+
+.dashboard-left {
+    flex: 0 0 auto; /* Ensure the left section does not grow */
+    width: 416px; 
+    border-radius: 10px;
+    padding: 20px;
+    color: green; 
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; /* Ensure content stays above background */
+}
+
+.dashboard-right {
+    flex: 1;
+    margin-left: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    color: green;
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; /* Ensure content stays above background */
+}
+
+/* Background image for the left section with 20% opacity */
+.dashboard-left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/Assets/Backgrounds/CommerceBgVertical.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; /* 20% opacity */
+    z-index: -1; /* Behind the content */
+}
+
+/* Background image for the right section with 20% opacity */
+.dashboard-right::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/Assets/Backgrounds/CommerceBgHorizontal2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; /* 20% opacity */
+    z-index: -1; /* Behind the content */
+}
+
+/* Dropdown menu styling */
+.account-dropdown {
+    width: 80%; 
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    color: #333; /* text color */
+    background-color: white; /* Default background color */
+    position: relative; /* Ensure it is above the pseudo-element */
+    z-index: 2; /* Ensure dropdown appears above the background */
+}
+
+    /* Style for the dropdown options */
+    .account-dropdown option {
+        background-color: green; /* Green background for the options */
+        color: white; /* White text color for contrast */
+    }
+
+    /* Dropdown appearance when focused */
+    .account-dropdown:focus {
+        outline: none;
+        border-color: green; /* Match the theme color */
+    }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .dashboard-left {
+        width: 100%; /* Full width on smaller screens */
+        height: 200px; /* Adjust height for smaller devices */
+    }
+
+    .dashboard-right {
+        width: 100%; /* Full width for the right section on smaller screens */
+        margin-left: 0; /* Remove the margin between the two sections */
+        height: auto; /* Let the height adjust naturally based on content */
+    }
+}

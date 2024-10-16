@@ -1,11 +1,19 @@
 is_global = true
 build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BlazorApp
 build_property.RootNamespace = BlazorApp
@@ -22,12 +30,52 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/BankAccountPages/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYW5rQWNjb3VudFBhZ2VzXENyZWF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/BankAccountPages/Delete.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYW5rQWNjb3VudFBhZ2VzXERlbGV0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/BankAccountPages/Details.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYW5rQWNjb3VudFBhZ2VzXERldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/BankAccountPages/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYW5rQWNjb3VudFBhZ2VzXEVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/BankAccountPages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYW5rQWNjb3VudFBhZ2VzXEluZGV4LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/UserAccountPages/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyQWNjb3VudFBhZ2VzXENyZWF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/UserAccountPages/Delete.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyQWNjb3VudFBhZ2VzXERlbGV0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/UserAccountPages/Details.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyQWNjb3VudFBhZ2VzXERldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/UserAccountPages/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyQWNjb3VudFBhZ2VzXEVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/UserAccountPages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyQWNjb3VudFBhZ2VzXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/Weather.razor]
@@ -49,6 +97,10 @@ build_metadata.AdditionalFiles.CssScope = b-qgsvw684bo
 [C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-g8o6n169oq
+
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ix3zhoijqt
 
 [C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y

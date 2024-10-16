@@ -1,0 +1,50 @@
+﻿@page "/bankaccounts/details"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>BankAccount</h2>
+    <hr />
+    @if (bankaccount is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">UserAccountId</dt>
+            <dd class="col-sm-10">@bankaccount.UserAccountId</dd>
+            <dt class="col-sm-2">AccountType</dt>
+            <dd class="col-sm-10">@bankaccount.AccountType</dd>
+            <dt class="col-sm-2">AccountBalance</dt>
+            <dd class="col-sm-10">@bankaccount.AccountBalance</dd>
+        </dl>
+        <div>
+            <a href="@($"/bankaccounts/edit?bankaccountid={bankaccount.BankAccountId}")">Edit</a> |
+            <a href="@($"/bankaccounts")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private BankAccount? bankaccount;
+
+    [SupplyParameterFromQuery]
+    private int BankAccountId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        bankaccount = await context.BankAccount.FirstOrDefaultAsync(m => m.BankAccountId == BankAccountId);
+
+        if (bankaccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

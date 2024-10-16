@@ -1,0 +1,109 @@
+﻿@page "/useraccounts/edit"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>[Debug] Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>UserAccount</h2>
+<hr />
+@if (UserAccount is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="UserAccount" OnValidSubmit="UpdateUserAccount" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <input type="hidden" name="UserAccount.UserAccountId" value="@UserAccount.UserAccountId" />
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <InputText id="email" @bind-Value="UserAccount.Email" class="form-control" />
+                    <ValidationMessage For="() => UserAccount.Email" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="passwordhash" class="form-label">PasswordHash:</label>
+                    <InputText id="passwordhash" @bind-Value="UserAccount.PasswordHash" class="form-control" />
+                    <ValidationMessage For="() => UserAccount.PasswordHash" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">FirstName:</label>
+                    <InputText id="firstname" @bind-Value="UserAccount.FirstName" class="form-control" />
+                    <ValidationMessage For="() => UserAccount.FirstName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">LastName:</label>
+                    <InputText id="lastname" @bind-Value="UserAccount.LastName" class="form-control" />
+                    <ValidationMessage For="() => UserAccount.LastName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="creationdate" class="form-label">CreationDate:</label>
+                    <InputDate id="creationdate" @bind-Value="UserAccount.CreationDate" class="form-control" />
+                    <ValidationMessage For="() => UserAccount.CreationDate" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/useraccounts">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int UserAccountId { get; set; }
+
+    [SupplyParameterFromForm]
+    private UserAccount? UserAccount { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        UserAccount ??= await context.UserAccount.FirstOrDefaultAsync(m => m.UserAccountId == UserAccountId);
+
+        if (UserAccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateUserAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(UserAccount!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!UserAccountExists(UserAccount!.UserAccountId))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/useraccounts");
+    }
+
+    private bool UserAccountExists(int useraccountid)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.UserAccount.Any(e => e.UserAccountId == useraccountid);
+    }
+}

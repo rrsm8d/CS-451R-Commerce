@@ -1,0 +1,54 @@
+﻿@page "/useraccounts/details"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>[Debug] Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>UserAccount</h2>
+    <hr />
+    @if (useraccount is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@useraccount.Email</dd>
+            <dt class="col-sm-2">PasswordHash</dt>
+            <dd class="col-sm-10">@useraccount.PasswordHash</dd>
+            <dt class="col-sm-2">FirstName</dt>
+            <dd class="col-sm-10">@useraccount.FirstName</dd>
+            <dt class="col-sm-2">LastName</dt>
+            <dd class="col-sm-10">@useraccount.LastName</dd>
+            <dt class="col-sm-2">CreationDate</dt>
+            <dd class="col-sm-10">@useraccount.CreationDate</dd>
+        </dl>
+        <div>
+            <a href="@($"/useraccounts/edit?useraccountid={useraccount.UserAccountId}")">Edit</a> |
+            <a href="@($"/useraccounts")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private UserAccount? useraccount;
+
+    [SupplyParameterFromQuery]
+    private int UserAccountId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        useraccount = await context.UserAccount.FirstOrDefaultAsync(m => m.UserAccountId == UserAccountId);
+
+        if (useraccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

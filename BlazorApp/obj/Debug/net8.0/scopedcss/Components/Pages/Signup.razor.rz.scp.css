@@ -26,13 +26,15 @@
         margin-bottom: 16px;
 }
 
-.signup-form[b-j569fatkmf] {
+/* Moved to be in the HTML because Blazor fuckery
+.signup-form {
     display: flex;
     align-items: center;
     flex-direction: column;
 
     width: 100%;
 }
+*/
 
 .input-field[b-j569fatkmf] {
     display: flex;
@@ -45,11 +47,13 @@
     height: 8rem;
 }
 
-.input-box[b-j569fatkmf] {
-    width: 30%;
+/* Moved to be in the HTML because Blazor fuckery
+.input-box {
+    width: 30% !important; 
     height: 3rem;
     border-radius: 100px;
 }
+*/
 
 .button-container[b-j569fatkmf] {
     display: flex;

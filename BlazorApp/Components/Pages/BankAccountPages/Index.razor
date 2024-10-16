@@ -1,0 +1,38 @@
+﻿@page "/bankaccounts"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using BlazorApp.Models
+@using BlazorApp.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="bankaccounts/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.BankAccount">
+    <PropertyColumn Property="bankaccount => bankaccount.UserAccountId" />
+    <PropertyColumn Property="bankaccount => bankaccount.AccountType" />
+    <PropertyColumn Property="bankaccount => bankaccount.AccountBalance" />
+
+    <TemplateColumn Context="bankaccount">
+        <a href="@($"bankaccounts/edit?bankaccountid={bankaccount.BankAccountId}")">Edit</a> |
+        <a href="@($"bankaccounts/details?bankaccountid={bankaccount.BankAccountId}")">Details</a> |
+        <a href="@($"bankaccounts/delete?bankaccountid={bankaccount.BankAccountId}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private BlazorAppContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

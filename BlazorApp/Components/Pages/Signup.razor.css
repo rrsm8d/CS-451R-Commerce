@@ -26,6 +26,7 @@
         margin-bottom: 16px;
 }
 
+/* Moved to be in the HTML because Blazor fuckery
 .signup-form {
     display: flex;
     align-items: center;
@@ -33,6 +34,7 @@
 
     width: 100%;
 }
+*/
 
 .input-field {
     display: flex;
@@ -45,11 +47,13 @@
     height: 8rem;
 }
 
+/* Moved to be in the HTML because Blazor fuckery
 .input-box {
-    width: 30%;
+    width: 30% !important; 
     height: 3rem;
     border-radius: 100px;
 }
+*/
 
 .button-container {
     display: flex;

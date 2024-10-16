@@ -1,0 +1,40 @@
+﻿@page "/useraccounts"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using BlazorApp.Models
+@using BlazorApp.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+
+<PageTitle>[Debug] Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="useraccounts/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.UserAccount">
+    <PropertyColumn Property="useraccount => useraccount.Email" />
+    <PropertyColumn Property="useraccount => useraccount.PasswordHash" />
+    <PropertyColumn Property="useraccount => useraccount.FirstName" />
+    <PropertyColumn Property="useraccount => useraccount.LastName" />
+    <PropertyColumn Property="useraccount => useraccount.CreationDate" />
+
+    <TemplateColumn Context="useraccount">
+        <a href="@($"useraccounts/edit?useraccountid={useraccount.UserAccountId}")">Edit</a> |
+        <a href="@($"useraccounts/details?useraccountid={useraccount.UserAccountId}")">Details</a> |
+        <a href="@($"useraccounts/delete?useraccountid={useraccount.UserAccountId}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private BlazorAppContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

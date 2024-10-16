@@ -1,0 +1,64 @@
+﻿@page "/useraccounts/create"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>[Debug] Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>UserAccount</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="UserAccount" OnValidSubmit="AddUserAccount" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label> 
+                <InputText id="email" @bind-Value="UserAccount.Email" class="form-control" /> 
+                <ValidationMessage For="() => UserAccount.Email" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="passwordhash" class="form-label">PasswordHash:</label> 
+                <InputText id="passwordhash" @bind-Value="UserAccount.PasswordHash" class="form-control" /> 
+                <ValidationMessage For="() => UserAccount.PasswordHash" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="firstname" class="form-label">FirstName:</label> 
+                <InputText id="firstname" @bind-Value="UserAccount.FirstName" class="form-control" /> 
+                <ValidationMessage For="() => UserAccount.FirstName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lastname" class="form-label">LastName:</label> 
+                <InputText id="lastname" @bind-Value="UserAccount.LastName" class="form-control" /> 
+                <ValidationMessage For="() => UserAccount.LastName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="creationdate" class="form-label">CreationDate:</label> 
+                <InputDate id="creationdate" @bind-Value="UserAccount.CreationDate" class="form-control" /> 
+                <ValidationMessage For="() => UserAccount.CreationDate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/useraccounts">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private UserAccount UserAccount { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddUserAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.UserAccount.Add(UserAccount);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/useraccounts");
+    }
+}

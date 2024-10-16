@@ -1,5 +1,11 @@
 ﻿@page "/signup"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@using Microsoft.AspNetCore.Identity
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
 
+<PageTitle>Signup</PageTitle>
 
 <div class="signup-container">
 
@@ -10,27 +16,65 @@
         <b>(Passwords must be at least 8 characters in length)</b>
     </p>
 
-    <!--TO-DO: Change action path when ready to implement.-->
-    <form class="signup-form" action="/auth.wtfgoeshere" id="myform">
+    <!--
+        It seems that using Blazor HTML components, such as EditForm and InputText, end up breaking the isolated css styles.
+        This was fixed by following https://stackoverflow.com/questions/65890644/css-isolation-in-blazor-doesnt-work-with-predefined-form-elements
+        tl;dr: The easy solution is just adding the styles in a <style> tag here, or write into the app.css file. Please just do the <style> tag, even if it's ugly
+    -->
+
+    <EditForm method="post" class="signup-form" Model="UserAccount" OnValidSubmit="AddUserAccount" FormName="create" id="create" Enhance>
         <fieldset class="input-field">
-            <input class="input-box form-control" type="email" id="email" name="email" placeholder="Enter your email" required />
-            <input class="input-box form-control" type="password" id="password" name="password" placeholder="Enter a password" required />
-            <input class="input-box form-control" type="password" id="passwordretry" name="passwordretry" placeholder="Re-enter password" required />
+            <InputText class="input-box form-control" type="email" id="email" placeholder="Enter your email" @bind-Value="UserAccount.Email" required />
+            <InputText class="input-box form-control" type="password" id="password" placeholder="Enter a password" @bind-Value="UserAccount.PasswordHash" required />
+            <InputText class="input-box form-control" type="password" id="passwordretry" placeholder="Re-enter password [Not finished]" @bind-Value="UserAccount.PasswordHash" required />
             <!--TO-DO: Add a little eye button to reveal password [Optional idk lol]-->
-            <input class="input-box form-control" type="text" id="fname" name="fname" placeholder="First name" required />
-            <input class="input-box form-control" type="text" id="lname" name="lname" placeholder="Last name" required />
+            <InputText class="input-box form-control" type="text" id="fname" placeholder="First name" @bind-Value="UserAccount.FirstName" required />
+            <InputText class="input-box form-control" type="text" id="lname" placeholder="Last name" @bind-Value="UserAccount.LastName" required />
         </fieldset>
-    </form>
+    </EditForm>
 
     <div class="button-container">
-        <button class="btn btn-primary signup-button" type="submit" form="myform">Signup!</button>
+        <button class="btn btn-primary signup-button" type="submit" form="create">Signup!</button>
         <a href="/login" class="btn btn-primary login-button" type="button">Back to login.</a>
     </div>
 
 </div>
 
-<!--TO-DO: Add on-click listeners to retrieve email, pass, & passretry from form to a temporary variable.-->
+<style>
+    /* Moved to be in the HTML because Blazor fuckery with EditForm and InputText */
+    .input-box {
+        width: 30% !important;
+        height: 3rem;
+        border-radius: 100px;
+    }
+
+    .signup-form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
+</style>
+
+<!--TO-DO: Require users to re-enter their password-->
+<!--TO-DO: Add basic regex to better check for valid emails, add character limits to other fields.-->
 
 @code {
+    [SupplyParameterFromForm]
+    private UserAccount UserAccount { get; set; } = new();
 
+    // Requires Microsoft.AspNetCore.Identity
+    // This apparently handles salting for us already? I don't understand, but I welcome it.
+    private readonly PasswordHasher<UserAccount> _passwordHasher = new();
+
+    private async Task AddUserAccount()
+    {
+        // Hash the password
+        UserAccount.PasswordHash = _passwordHasher.HashPassword(UserAccount, UserAccount.PasswordHash);
+        UserAccount.CreationDate = DateTime.Now;
+        using var context = DbFactory.CreateDbContext();
+        context.UserAccount.Add(UserAccount);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/useraccounts"); // TO-DO: Change me in production to /login
+    }
 }

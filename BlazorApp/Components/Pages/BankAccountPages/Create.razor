@@ -1,0 +1,54 @@
+﻿@page "/bankaccounts/create"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>BankAccount</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="BankAccount" OnValidSubmit="AddBankAccount" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="useraccountid" class="form-label">UserAccountId:</label> 
+                <InputNumber id="useraccountid" @bind-Value="BankAccount.UserAccountId" class="form-control" /> 
+                <ValidationMessage For="() => BankAccount.UserAccountId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="accounttype" class="form-label">AccountType:</label> 
+                <InputText id="accounttype" @bind-Value="BankAccount.AccountType" class="form-control" /> 
+                <ValidationMessage For="() => BankAccount.AccountType" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="accountbalance" class="form-label">AccountBalance:</label> 
+                <InputNumber id="accountbalance" @bind-Value="BankAccount.AccountBalance" class="form-control" /> 
+                <ValidationMessage For="() => BankAccount.AccountBalance" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/bankaccounts">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private BankAccount BankAccount { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddBankAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.BankAccount.Add(BankAccount);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/bankaccounts");
+    }
+}

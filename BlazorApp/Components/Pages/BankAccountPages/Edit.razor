@@ -1,0 +1,99 @@
+﻿@page "/bankaccounts/edit"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>BankAccount</h2>
+<hr />
+@if (BankAccount is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="BankAccount" OnValidSubmit="UpdateBankAccount" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <input type="hidden" name="BankAccount.BankAccountId" value="@BankAccount.BankAccountId" />
+                <div class="mb-3">
+                    <label for="useraccountid" class="form-label">UserAccountId:</label>
+                    <InputNumber id="useraccountid" @bind-Value="BankAccount.UserAccountId" class="form-control" />
+                    <ValidationMessage For="() => BankAccount.UserAccountId" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="accounttype" class="form-label">AccountType:</label>
+                    <InputText id="accounttype" @bind-Value="BankAccount.AccountType" class="form-control" />
+                    <ValidationMessage For="() => BankAccount.AccountType" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="accountbalance" class="form-label">AccountBalance:</label>
+                    <InputNumber id="accountbalance" @bind-Value="BankAccount.AccountBalance" class="form-control" />
+                    <ValidationMessage For="() => BankAccount.AccountBalance" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/bankaccounts">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int BankAccountId { get; set; }
+
+    [SupplyParameterFromForm]
+    private BankAccount? BankAccount { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        BankAccount ??= await context.BankAccount.FirstOrDefaultAsync(m => m.BankAccountId == BankAccountId);
+
+        if (BankAccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateBankAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(BankAccount!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!BankAccountExists(BankAccount!.BankAccountId))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/bankaccounts");
+    }
+
+    private bool BankAccountExists(int bankaccountid)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.BankAccount.Any(e => e.BankAccountId == bankaccountid);
+    }
+}

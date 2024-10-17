@@ -8,8 +8,13 @@ main[b-qgsvw684bo] {
     flex: 1;
 }
 
-.sidebar[b-qgsvw684bo] {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+/* Used to be .sidebar */
+.navbar[b-qgsvw684bo] {
+    /* A linear gradient might be good to make our site look a little less plain. Not this one tho */
+    /* background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%); */
+    background-color: #E3E3E3;
+    display: flex;
+    justify-content: space-between;
 }
 
 .top-row[b-qgsvw684bo] {
@@ -48,14 +53,25 @@ main[b-qgsvw684bo] {
 
 @media (min-width: 641px) {
     .page[b-qgsvw684bo] {
-        flex-direction: row;
+        /* Changed to row so navbar is instead aligned to the top of the page */
+        flex-direction: column;
     }
 
-    .sidebar[b-qgsvw684bo] {
+    .navbar[b-qgsvw684bo] { /* THIS IS THE ONE THAT WORKS!!! */
+        /* Changed to make the top navbar size
         width: 250px;
         height: 100vh;
+        */
+        width: 100%;
+        height: 5rem;
         position: sticky;
         top: 0;
+        padding: 0 2%;
+        box-shadow: 0 8px 6px -8px #76716C;
+    }
+
+    .navbar[b-qgsvw684bo]  div {
+        width: 30%;
     }
 
     .top-row[b-qgsvw684bo] {
@@ -94,3 +110,10 @@ main[b-qgsvw684bo] {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+/* Used for the navbar buttons */
+[b-qgsvw684bo] .active-link {
+    background-color: #4FA800;
+    color: #FFFFFF !important; /* Im dumb and don't know how else to make it overwrite the text color from ".navbar-btn-container div a" */
+    border-radius: 100px;
+}

@@ -18,6 +18,7 @@ main[b-qgsvw684bo] {
     background-color: #E3E3E3;
     display: flex;
     justify-content: space-between;
+    z-index: 99; /* Keep it above others */
 }
 
 .top-row[b-qgsvw684bo] {

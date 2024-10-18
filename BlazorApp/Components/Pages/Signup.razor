@@ -19,7 +19,7 @@
     <!--
         It seems that using Blazor HTML components, such as EditForm and InputText, end up breaking the isolated css styles.
         This was fixed by following https://stackoverflow.com/questions/65890644/css-isolation-in-blazor-doesnt-work-with-predefined-form-elements
-        tl;dr: The easy solution is just adding the styles in a <style> tag here, or write into the app.css file. Please just do the <style> tag, even if it's ugly
+        tl;dr: The easy solution is just adding the styles in a <style> tag here, add a ::deep before the class, or write into app.css (not recommended tbh)
     -->
 
     <EditForm method="post" class="signup-form" Model="UserAccount" OnValidSubmit="AddUserAccount" FormName="create" id="create" Enhance>

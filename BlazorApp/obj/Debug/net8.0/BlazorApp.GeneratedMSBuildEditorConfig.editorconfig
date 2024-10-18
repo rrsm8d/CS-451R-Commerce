@@ -30,6 +30,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Layout/FooterComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRm9vdGVyQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ricky/Documents/Coding/CommerceBankNewBlazor/CS-451R-Commerce/BlazorApp/Components/Pages/BankAccountPages/Create.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYW5rQWNjb3VudFBhZ2VzXENyZWF0ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

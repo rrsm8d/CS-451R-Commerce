@@ -15,6 +15,7 @@ main {
     background-color: #E3E3E3;
     display: flex;
     justify-content: space-between;
+    z-index: 99; /* Keep it above others */
 }
 
 .top-row {
@@ -67,7 +68,7 @@ main {
         position: sticky;
         top: 0;
         padding: 0 2%;
-        box-shadow: 0 8px 6px -8px #76716C;
+        box-shadow: 0 8px 6px -8px #76716C; /* TO-DO: Make this look less bad by having the shadow drop to the entirety of the bottom */
     }
 
     .navbar ::deep div {

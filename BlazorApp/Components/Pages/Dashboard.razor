@@ -3,7 +3,7 @@
 <PageTitle>Dashboard</PageTitle>
 
 <div class="dashboard-container">
-    <!-- Left Section (smaller, with background image) -->
+    <!-- Left Section -->
     <div class="dashboard-left">
         <h3>Select an account to view</h3>
         <!-- Dropdown menu -->
@@ -15,6 +15,15 @@
                 <option value="Credit">Credit Account</option>
             </select>
         </div>
+
+        <!-- Toggle Switch -->
+        <div class="toggle-switch">
+            <input type="checkbox" id="toggleView" class="toggle-checkbox" @onchange="OnToggleSwitchChange">
+            <label for="toggleView" class="toggle-label">
+                <span class="toggle-switch-text" data-view="list">List View</span>
+                <span class="toggle-switch-text" data-view="graphical">Graphical View</span>
+            </label>
+        </div>
     </div>
 
     <!-- Right Section -->
@@ -24,11 +33,20 @@
     </div>
 </div>
 
+
 @code {
+    private string selectedAccount = string.Empty;
+
     private void OnAccountSelected(ChangeEventArgs e)
-
     {
-        var selectedAccount = e.Value.ToString();
+        selectedAccount = e.Value.ToString();
+    }
 
+    private void OnToggleSwitchChange(ChangeEventArgs e)
+    {
+        bool isToggled = (bool)e.Value; // Get the toggle switch value
+                                        // Implement the logic based on the toggle switch state
+                                        // For now, just set up the method; logic for view change can be implemented later.
     }
 }
+

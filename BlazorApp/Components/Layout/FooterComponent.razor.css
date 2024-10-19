@@ -1,0 +1,12 @@
+﻿::deep .nav-link {
+    color: #FFFFFF;
+}
+
+::deep .nav-link:hover {
+    color: red;
+}
+
+.footer-img-container {
+    display: flex;
+    justify-content: center;
+}

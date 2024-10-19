@@ -118,3 +118,8 @@ main {
     color: #FFFFFF !important; /* Im dumb and don't know how else to make it overwrite the text color from ".navbar-btn-container div a" */
     border-radius: 100px;
 }
+
+.footer {
+    background-color: #006747;
+    color: #FFFFFF;
+}

@@ -1,3 +1,16 @@
+/* _content/BlazorApp/Components/Layout/FooterComponent.razor.rz.scp.css */
+[b-2h360okbcs] .nav-link {
+    color: #FFFFFF;
+}
+
+[b-2h360okbcs] .nav-link:hover {
+    color: red;
+}
+
+.footer-img-container[b-2h360okbcs] {
+    display: flex;
+    justify-content: center;
+}
 /* _content/BlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
 .page[b-qgsvw684bo] {
     position: relative;
@@ -69,7 +82,7 @@ main[b-qgsvw684bo] {
         position: sticky;
         top: 0;
         padding: 0 2%;
-        box-shadow: 0 8px 6px -8px #76716C;
+        box-shadow: 0 8px 6px -8px #76716C; /* TO-DO: Make this look less bad by having the shadow drop to the entirety of the bottom */
     }
 
     .navbar[b-qgsvw684bo]  div {
@@ -118,6 +131,11 @@ main[b-qgsvw684bo] {
     background-color: #4FA800;
     color: #FFFFFF !important; /* Im dumb and don't know how else to make it overwrite the text color from ".navbar-btn-container div a" */
     border-radius: 100px;
+}
+
+.footer[b-qgsvw684bo] {
+    background-color: #006747;
+    color: #FFFFFF;
 }
 /* _content/BlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-g8o6n169oq] {

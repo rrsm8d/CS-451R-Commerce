@@ -303,3 +303,4 @@ C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp
 C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\ricky\Documents\Coding\CommerceBankNewBlazor\CS-451R-Commerce\BlazorApp\obj\Debug\net8.0\scopedcss\Components\Layout\FooterComponent.razor.rz.scp.css

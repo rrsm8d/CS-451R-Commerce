@@ -7,6 +7,7 @@ namespace BlazorApp.Models
     {
         public int BankAccountId { get; set; } // Primary key
         public int UserAccountId { get; set; } // Foreign key
+        [StringLength(100)]
         public String AccountType { get; set; }
 
         [DataType(DataType.Currency)]

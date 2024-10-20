@@ -1,0 +1,63 @@
+﻿@page "/budgetplans/delete"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>BudgetPlan</h2>
+    <hr />
+    @if (budgetplan is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">AccountId</dt>
+            <dd class="col-sm-10">@budgetplan.AccountId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">BudgetAmount</dt>
+            <dd class="col-sm-10">@budgetplan.BudgetAmount</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">BudgetExpenditures</dt>
+            <dd class="col-sm-10">@budgetplan.BudgetExpenditures</dd>
+        </dl>
+        <EditForm method="post" Model="budgetplan" OnValidSubmit="DeleteBudgetPlan" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(budgetplan is null)">Delete</button> |
+            <a href="/budgetplans">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private BudgetPlan? budgetplan;
+
+    [SupplyParameterFromQuery]
+    private int BudgetPlanId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        budgetplan = await context.BudgetPlan.FirstOrDefaultAsync(m => m.BudgetPlanId == BudgetPlanId);
+
+        if (budgetplan is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteBudgetPlan()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.BudgetPlan.Remove(budgetplan!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/budgetplans");
+    }
+}

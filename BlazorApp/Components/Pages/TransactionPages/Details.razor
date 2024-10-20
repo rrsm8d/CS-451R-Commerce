@@ -1,0 +1,56 @@
+﻿@page "/transactions/details"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Transaction</h2>
+    <hr />
+    @if (transaction is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">AccountId</dt>
+            <dd class="col-sm-10">@transaction.AccountId</dd>
+            <dt class="col-sm-2">TransactionAmount</dt>
+            <dd class="col-sm-10">@transaction.TransactionAmount</dd>
+            <dt class="col-sm-2">TransactionDate</dt>
+            <dd class="col-sm-10">@transaction.TransactionDate</dd>
+            <dt class="col-sm-2">Merchant</dt>
+            <dd class="col-sm-10">@transaction.Merchant</dd>
+            <dt class="col-sm-2">StartDate</dt>
+            <dd class="col-sm-10">@transaction.StartDate</dd>
+            <dt class="col-sm-2">EndDate</dt>
+            <dd class="col-sm-10">@transaction.EndDate</dd>
+        </dl>
+        <div>
+            <a href="@($"/transactions/edit?transactionid={transaction.TransactionId}")">Edit</a> |
+            <a href="@($"/transactions")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Transaction? transaction;
+
+    [SupplyParameterFromQuery]
+    private int TransactionId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        transaction = await context.Transaction.FirstOrDefaultAsync(m => m.TransactionId == TransactionId);
+
+        if (transaction is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

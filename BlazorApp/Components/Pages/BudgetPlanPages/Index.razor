@@ -1,0 +1,38 @@
+﻿@page "/budgetplans"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using BlazorApp.Models
+@using BlazorApp.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="budgetplans/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.BudgetPlan">
+    <PropertyColumn Property="budgetplan => budgetplan.AccountId" />
+    <PropertyColumn Property="budgetplan => budgetplan.BudgetAmount" />
+    <PropertyColumn Property="budgetplan => budgetplan.BudgetExpenditures" />
+
+    <TemplateColumn Context="budgetplan">
+        <a href="@($"budgetplans/edit?budgetplanid={budgetplan.BudgetPlanId}")">Edit</a> |
+        <a href="@($"budgetplans/details?budgetplanid={budgetplan.BudgetPlanId}")">Details</a> |
+        <a href="@($"budgetplans/delete?budgetplanid={budgetplan.BudgetPlanId}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private BlazorAppContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

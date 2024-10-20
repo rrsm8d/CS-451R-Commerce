@@ -11,6 +11,7 @@ namespace BlazorApp.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal TransactionAmount { get; set; }
         public DateTime TransactionDate { get; set; } // This attribute is cursed for some reason. I think I squashed all the bugs
+        [StringLength(100)]
         public string? Merchant { get; set; } // Question mark makes the attribute nullable.
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

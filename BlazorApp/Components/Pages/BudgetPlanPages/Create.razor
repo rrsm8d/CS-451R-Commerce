@@ -1,0 +1,54 @@
+﻿@page "/budgetplans/create"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>BudgetPlan</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="BudgetPlan" OnValidSubmit="AddBudgetPlan" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="accountid" class="form-label">AccountId:</label> 
+                <InputNumber id="accountid" @bind-Value="BudgetPlan.AccountId" class="form-control" /> 
+                <ValidationMessage For="() => BudgetPlan.AccountId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="budgetamount" class="form-label">BudgetAmount:</label> 
+                <InputNumber id="budgetamount" @bind-Value="BudgetPlan.BudgetAmount" class="form-control" /> 
+                <ValidationMessage For="() => BudgetPlan.BudgetAmount" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="budgetexpenditures" class="form-label">BudgetExpenditures:</label> 
+                <InputNumber id="budgetexpenditures" @bind-Value="BudgetPlan.BudgetExpenditures" class="form-control" /> 
+                <ValidationMessage For="() => BudgetPlan.BudgetExpenditures" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/budgetplans">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private BudgetPlan BudgetPlan { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddBudgetPlan()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.BudgetPlan.Add(BudgetPlan);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/budgetplans");
+    }
+}

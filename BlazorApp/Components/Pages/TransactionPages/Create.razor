@@ -1,0 +1,69 @@
+﻿@page "/transactions/create"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Transaction</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Transaction" OnValidSubmit="AddTransaction" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="accountid" class="form-label">AccountId:</label> 
+                <InputNumber id="accountid" @bind-Value="Transaction.AccountId" class="form-control" /> 
+                <ValidationMessage For="() => Transaction.AccountId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="transactionamount" class="form-label">TransactionAmount:</label> 
+                <InputNumber id="transactionamount" @bind-Value="Transaction.TransactionAmount" class="form-control" /> 
+                <ValidationMessage For="() => Transaction.TransactionAmount" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="transactiondate" class="form-label">TransactionDate:</label> 
+                <InputDate id="transactiondate" @bind-Value="Transaction.TransactionDate" class="form-control" /> 
+                <ValidationMessage For="() => Transaction.TransactionDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="merchant" class="form-label">Merchant:</label> 
+                <InputText id="merchant" @bind-Value="Transaction.Merchant" class="form-control" /> 
+                <ValidationMessage For="() => Transaction.Merchant" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="startdate" class="form-label">StartDate:</label> 
+                <InputDate id="startdate" @bind-Value="Transaction.StartDate" class="form-control" /> 
+                <ValidationMessage For="() => Transaction.StartDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="enddate" class="form-label">EndDate:</label> 
+                <InputDate id="enddate" @bind-Value="Transaction.EndDate" class="form-control" /> 
+                <ValidationMessage For="() => Transaction.EndDate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/transactions">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Transaction Transaction { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddTransaction()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Transaction.Add(Transaction);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/transactions");
+    }
+}

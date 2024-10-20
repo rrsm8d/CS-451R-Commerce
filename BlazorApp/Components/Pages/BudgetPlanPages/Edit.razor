@@ -1,0 +1,99 @@
+﻿@page "/budgetplans/edit"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>BudgetPlan</h2>
+<hr />
+@if (BudgetPlan is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="BudgetPlan" OnValidSubmit="UpdateBudgetPlan" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <input type="hidden" name="BudgetPlan.BudgetPlanId" value="@BudgetPlan.BudgetPlanId" />
+                <div class="mb-3">
+                    <label for="accountid" class="form-label">AccountId:</label>
+                    <InputNumber id="accountid" @bind-Value="BudgetPlan.AccountId" class="form-control" />
+                    <ValidationMessage For="() => BudgetPlan.AccountId" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="budgetamount" class="form-label">BudgetAmount:</label>
+                    <InputNumber id="budgetamount" @bind-Value="BudgetPlan.BudgetAmount" class="form-control" />
+                    <ValidationMessage For="() => BudgetPlan.BudgetAmount" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="budgetexpenditures" class="form-label">BudgetExpenditures:</label>
+                    <InputNumber id="budgetexpenditures" @bind-Value="BudgetPlan.BudgetExpenditures" class="form-control" />
+                    <ValidationMessage For="() => BudgetPlan.BudgetExpenditures" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/budgetplans">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int BudgetPlanId { get; set; }
+
+    [SupplyParameterFromForm]
+    private BudgetPlan? BudgetPlan { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        BudgetPlan ??= await context.BudgetPlan.FirstOrDefaultAsync(m => m.BudgetPlanId == BudgetPlanId);
+
+        if (BudgetPlan is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateBudgetPlan()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(BudgetPlan!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!BudgetPlanExists(BudgetPlan!.BudgetPlanId))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/budgetplans");
+    }
+
+    private bool BudgetPlanExists(int budgetplanid)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.BudgetPlan.Any(e => e.BudgetPlanId == budgetplanid);
+    }
+}

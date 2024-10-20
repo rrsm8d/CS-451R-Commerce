@@ -1,0 +1,50 @@
+﻿@page "/budgetplans/details"
+@using Microsoft.EntityFrameworkCore
+@using BlazorApp.Models
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>BudgetPlan</h2>
+    <hr />
+    @if (budgetplan is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">AccountId</dt>
+            <dd class="col-sm-10">@budgetplan.AccountId</dd>
+            <dt class="col-sm-2">BudgetAmount</dt>
+            <dd class="col-sm-10">@budgetplan.BudgetAmount</dd>
+            <dt class="col-sm-2">BudgetExpenditures</dt>
+            <dd class="col-sm-10">@budgetplan.BudgetExpenditures</dd>
+        </dl>
+        <div>
+            <a href="@($"/budgetplans/edit?budgetplanid={budgetplan.BudgetPlanId}")">Edit</a> |
+            <a href="@($"/budgetplans")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private BudgetPlan? budgetplan;
+
+    [SupplyParameterFromQuery]
+    private int BudgetPlanId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        budgetplan = await context.BudgetPlan.FirstOrDefaultAsync(m => m.BudgetPlanId == BudgetPlanId);
+
+        if (budgetplan is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

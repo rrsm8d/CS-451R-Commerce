@@ -16,5 +16,7 @@ namespace BlazorApp.Data
 
         public DbSet<BlazorApp.Models.UserAccount> UserAccount { get; set; } = default!;
         public DbSet<BlazorApp.Models.BankAccount> BankAccount { get; set; } = default!;
+        public DbSet<BlazorApp.Models.BudgetPlan> BudgetPlan { get; set; } = default!;
+        public DbSet<BlazorApp.Models.Transaction> Transaction { get; set; } = default!;
     }
 }

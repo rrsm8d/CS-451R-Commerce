@@ -285,7 +285,7 @@ main[b-qgsvw684bo] {
 display: flex;
 justify-content: space-between;
 padding: 20px;
-height: 100vh; /* Set height to fill the viewport */
+height: 75vh; /* Set height to fill the viewport */
 }
 
 /* Container for the dashboard-left */

@@ -8220,19 +8220,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ricky\\.nuget\\packages\\": {}
+    "C:\\Users\\Greg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\BlazorApp.csproj",
+      "projectUniqueName": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\BlazorApp.csproj",
       "projectName": "BlazorApp",
-      "projectPath": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\BlazorApp.csproj",
-      "packagesPath": "C:\\Users\\ricky\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ricky\\Documents\\Coding\\CommerceBankNewBlazor\\CS-451R-Commerce\\BlazorApp\\obj\\",
+      "projectPath": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\BlazorApp.csproj",
+      "packagesPath": "C:\\Users\\Greg\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Greg\\Source\\Repos\\CS-451R-Commerce\\BlazorApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ricky\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Greg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

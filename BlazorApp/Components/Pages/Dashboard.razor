@@ -1,4 +1,8 @@
 ﻿@page "/dashboard"
+@using BlazorApp.Models
+@using BlazorApp.Data
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -9,10 +13,12 @@
         <!-- Dropdown menu -->
         <div class="dropdown-container">
             <select @onchange="OnAccountSelected" class="account-dropdown">
-                <option value="">-- Select Account --</option>
-                <option value="Checking">Checking Account</option>
-                <option value="Savings">Savings Account</option>
-                <option value="Credit">Credit Account</option>
+               
+                @foreach (var account in BankAccounts)
+
+                {
+                    <option value="@account.BankAccountId">@account.AccountType - Balance: @account.AccountBalance</option>
+                }
             </select>
         </div>
 
@@ -29,24 +35,76 @@
     <!-- Right Section -->
     <div class="dashboard-right">
         <!-- Content of the right section -->
-        <h3>No Account Selected</h3>
+        <h3>@(SelectedAccount?.AccountType != null ? $"Account Details for {SelectedAccount?.AccountType}" : "No Account Selected")</h3>
     </div>
 </div>
 
-
 @code {
-    private string selectedAccount = string.Empty;
+    private List<BankAccount> BankAccounts { get; set; } = new();
+
+    private BankAccount? SelectedAccount { get; set; }
+
+    private int currentUserId = 0; // Placeholder, replace with actual user ID when login implemented.
+
+
+
+    protected override async Task OnInitializedAsync()
+
+    {
+
+        await LoadBankAccountsForUser();
+
+    }
+
+
+
+    private async Task LoadBankAccountsForUser()
+
+    {
+
+        using var context = DbFactory.CreateDbContext();
+
+
+
+        // Fetch accounts for the user with ID = 0
+
+        // This should be replaced with the actual logged-in user's ID in a real implementation.
+
+        BankAccounts = await context.BankAccount
+
+            .Where(account => account.UserAccountId == currentUserId)
+
+            .ToListAsync();
+
+    }
+
+
 
     private void OnAccountSelected(ChangeEventArgs e)
+
     {
-        selectedAccount = e.Value.ToString();
+
+        if (int.TryParse(e.Value.ToString(), out int accountId))
+
+        {
+
+            SelectedAccount = BankAccounts.FirstOrDefault(account => account.BankAccountId == accountId);
+
+        }
+
     }
+
+
 
     private void OnToggleSwitchChange(ChangeEventArgs e)
+
     {
+
         bool isToggled = (bool)e.Value; // Get the toggle switch value
+
                                         // Implement the logic based on the toggle switch state
+
                                         // For now, just set up the method; logic for view change can be implemented later.
+
     }
 }
-

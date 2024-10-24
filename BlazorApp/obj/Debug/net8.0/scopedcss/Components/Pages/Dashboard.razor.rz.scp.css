@@ -1,8 +1,8 @@
 .dashboard-container[b-ix3zhoijqt] {
-display: flex;
-justify-content: space-between;
-padding: 20px;
-height: 75vh; /* Set height to fill the viewport */
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 75vh; /* Set height to fill the viewport */
 }
 
 /* Container for the dashboard-left */
@@ -254,10 +254,95 @@ height: 75vh; /* Set height to fill the viewport */
 /* Highlight active option */
 .toggle-checkbox:not(:checked) + .toggle-label [data-view="list"][b-ix3zhoijqt] {
     background-color: #4caf50; /* Green background */
-    color: white; 
+    color: white;
 }
 
 .toggle-checkbox:checked + .toggle-label [data-view="graphical"][b-ix3zhoijqt] {
-    background-color: #4caf50; 
-    color: white; 
+    background-color: #4caf50;
+    color: white;
+}
+
+.transactions-container[b-ix3zhoijqt] {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.transaction-box[b-ix3zhoijqt] {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13.8726px 20.8089px;
+    gap: 20px;
+    width: 100%;
+    max-width: 1324px;
+    height: 89.75px;
+    background: #FAFAFB;
+    opacity: 0.95;
+    border: 0.867036px solid #E0E0E0;
+    border-radius: 10.4044px;
+    position: relative;
+}
+
+.transaction-icon[b-ix3zhoijqt] {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #4A4A4A;
+    border: 1px solid #333333;
+}
+
+    .transaction-icon span[b-ix3zhoijqt] {
+        color: white;
+        font-size: 16px;
+    }
+
+/* Styling the transaction details container */
+.transaction-details[b-ix3zhoijqt] {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Top right for date */
+.transaction-date[b-ix3zhoijqt] {
+    align-self: flex-end;
+    font-size: 20px;
+    color: #262626;
+}
+
+/* Bottom left for merchant */
+.transaction-merchant[b-ix3zhoijqt] {
+    align-self: flex-start;
+    font-size: 20px;
+    color: #262626;
+    margin-top: auto;
+}
+
+/* Bottom right for amount */
+.transaction-amount[b-ix3zhoijqt] {
+    align-self: flex-end;
+    font-size: 18px;
+    color: #262626;
+    margin-top: auto;
+}
+
+
+.transaction-box h5[b-ix3zhoijqt] {
+    margin: 0;
+    font-size: 18px;
+    color: #262626; /* Darker text color for contrast */
+}
+
+.transaction-box p[b-ix3zhoijqt] {
+    margin: 0;
+    font-size: 14px;
+    color: #262626; /* Darker text color for contrast */
 }

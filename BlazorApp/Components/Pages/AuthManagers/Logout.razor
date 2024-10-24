@@ -1,5 +1,7 @@
 ﻿@page "/logout"
 @inject NavigationManager NavigationManager
+@attribute [StreamRendering]
+<!-- Stream rendering should fix the login message not displaying -->
 
 <PageTitle>Logging Out...</PageTitle>
 
@@ -20,16 +22,11 @@
         if(HttpContext.User.Identity.IsAuthenticated)
         {
             await HttpContext.SignOutAsync();
-            // WHY THE FUCK IS THIS STUPID FUCKING PAGE NOT LOADING THE FRONT-END EVEN WITH TASK DELAYS
-            // TO-DO: FIX THIS SHIT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             NavigationManager.NavigateTo("/logout", true);
         } else
         {
-            // PUTTING IT HERE ON THE PAGE RELOAD DOESN'T WORK EITHER AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            /*
             await Task.Delay(3000);
             NavigationManager.NavigateTo("/#");
-            */
         }
     }
 }

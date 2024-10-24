@@ -26,7 +26,7 @@
     margin-bottom: 16px; 
 }
 
-.login-form {
+::deep .login-form {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -42,8 +42,8 @@
     width: 100%;
 }
 
-.input-box {
-    width: 40%;
+::deep .input-box {
+    width: 30%;
     height: 3rem;
     border-radius: 100px;
 }

@@ -6,6 +6,7 @@ namespace BlazorApp.Models
     public class UserAccount
     {
         public int UserAccountId { get; set; } // Primary key
+        // [DataType(DataType.EmailAddress)]
         [StringLength(100)]
         public string Email { get; set; }
         [StringLength(100)]

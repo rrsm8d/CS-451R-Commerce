@@ -278,6 +278,24 @@ main[b-qgsvw684bo] {
     }
 }
 
+/* _content/BlazorApp/Components/Pages/AuthManagers/Logout.razor.rz.scp.css */
+.message-container[b-0ticmffypf] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 5% 10%;
+    padding: 2% 5%;
+
+    height: 500px;
+    max-height: 500px;
+}
+
+h1[b-0ticmffypf], h4[b-0ticmffypf] {
+    color: #006747;
+    text-shadow: 0.5px 0.5px 2px black;
+}
 /* _content/BlazorApp/Components/Pages/Dashboard.razor.rz.scp.css */
 .dashboard-container[b-ix3zhoijqt] {
 display: flex;
@@ -733,7 +751,7 @@ Component.razor
     margin-bottom: 16px; 
 }
 
-.login-form[b-1dfqxkzgeh] {
+[b-1dfqxkzgeh] .login-form {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -749,8 +767,8 @@ Component.razor
     width: 100%;
 }
 
-.input-box[b-1dfqxkzgeh] {
-    width: 40%;
+[b-1dfqxkzgeh] .input-box {
+    width: 30%;
     height: 3rem;
     border-radius: 100px;
 }
@@ -850,6 +868,19 @@ Component.razor
     border-radius: 100px;
 }
 */
+
+[b-j569fatkmf] .input-box {
+    width: 30% !important;
+    height: 3rem;
+    border-radius: 100px;
+}
+
+[b-j569fatkmf] .signup-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
 
 .button-container[b-j569fatkmf] {
     display: flex;

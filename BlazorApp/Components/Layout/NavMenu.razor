@@ -23,6 +23,9 @@
 </div>
 
 <div class="navbar-btn-container" style="justify-content: flex-end">
+    <AuthorizeView>
+
+        <NotAuthorized>
     <div>
         <NavLink class="nav-link" href="/login" Match="NavLinkMatch.All" ActiveClass="active-link">
             <span aria-hidden="true"></span> Login
@@ -34,9 +37,27 @@
             <span aria-hidden="true"></span> Signup
         </NavLink>
     </div>
+        </NotAuthorized>
+
+
+
+        <Authorized>
+    <div>
+        <NavLink class="nav-link" href="/logout">
+            <span aria-hidden="true"></span> Logout
+        </NavLink>
+    </div>
+        </Authorized>
+
+    </AuthorizeView>
 </div>
+
+
 
 <!--
     Using Match and ActiveClass to detect what page the user is currently on. If the user is on that page, activate the active-link class.
     Again, the CSS on Blazor HTML components (dark green on VS default) need a ::deep before the class.
 -->
+
+@code {
+}

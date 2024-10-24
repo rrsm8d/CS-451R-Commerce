@@ -1,0 +1,35 @@
+﻿@page "/logout"
+@inject NavigationManager NavigationManager
+
+<PageTitle>Logging Out...</PageTitle>
+
+<div class="message-container">
+
+    <h1> You have been logged out </h1>
+    <h4> Redirecting... </h4>
+
+</div>
+
+@code {
+    [CascadingParameter]
+    public HttpContext HttpContext{ get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if(HttpContext.User.Identity.IsAuthenticated)
+        {
+            await HttpContext.SignOutAsync();
+            // WHY THE FUCK IS THIS STUPID FUCKING PAGE NOT LOADING THE FRONT-END EVEN WITH TASK DELAYS
+            // TO-DO: FIX THIS SHIT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            NavigationManager.NavigateTo("/logout", true);
+        } else
+        {
+            // PUTTING IT HERE ON THE PAGE RELOAD DOESN'T WORK EITHER AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            /*
+            await Task.Delay(3000);
+            NavigationManager.NavigateTo("/#");
+            */
+        }
+    }
+}

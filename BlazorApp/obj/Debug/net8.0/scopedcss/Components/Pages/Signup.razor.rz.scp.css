@@ -55,6 +55,19 @@
 }
 */
 
+[b-j569fatkmf] .input-box {
+    width: 30% !important;
+    height: 3rem;
+    border-radius: 100px;
+}
+
+[b-j569fatkmf] .signup-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
 .button-container[b-j569fatkmf] {
     display: flex;
     flex-direction: column;

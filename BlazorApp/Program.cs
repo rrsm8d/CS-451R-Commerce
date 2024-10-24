@@ -2,6 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BlazorApp.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Components;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<BlazorAppContext>(options =>
@@ -10,6 +15,23 @@ builder.Services.AddDbContextFactory<BlazorAppContext>(options =>
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Authentication?
+// I was following this video here: https://www.youtube.com/watch?v=GKvEuA80FAE
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "auth_token"; // Custom cookie name
+        options.LoginPath = "/login";
+        options.Cookie.MaxAge = TimeSpan.FromDays(7);
+        options.AccessDeniedPath = "/access-denied";
+    });
+// Authorization
+builder.Services.AddAuthorization();
+// Passing the authentication state thoughout the application
+builder.Services.AddCascadingAuthenticationState();
+
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -30,6 +52,11 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+// Also for authentication and authorization
+// https://www.youtube.com/watch?v=GKvEuA80FAE
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

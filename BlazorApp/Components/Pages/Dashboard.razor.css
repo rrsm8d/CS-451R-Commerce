@@ -1,8 +1,8 @@
 ﻿.dashboard-container {
-display: flex;
-justify-content: space-between;
-padding: 20px;
-height: 75vh; /* Set height to fill the viewport */
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    height: 75vh; /* Set height to fill the viewport */
 }
 
 /* Container for the dashboard-left */
@@ -254,10 +254,95 @@ height: 75vh; /* Set height to fill the viewport */
 /* Highlight active option */
 .toggle-checkbox:not(:checked) + .toggle-label [data-view="list"] {
     background-color: #4caf50; /* Green background */
-    color: white; 
+    color: white;
 }
 
 .toggle-checkbox:checked + .toggle-label [data-view="graphical"] {
-    background-color: #4caf50; 
-    color: white; 
+    background-color: #4caf50;
+    color: white;
+}
+
+.transactions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.transaction-box {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13.8726px 20.8089px;
+    gap: 20px;
+    width: 100%;
+    max-width: 1324px;
+    height: 89.75px;
+    background: #FAFAFB;
+    opacity: 0.95;
+    border: 0.867036px solid #E0E0E0;
+    border-radius: 10.4044px;
+    position: relative;
+}
+
+.transaction-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #4A4A4A;
+    border: 1px solid #333333;
+}
+
+    .transaction-icon span {
+        color: white;
+        font-size: 16px;
+    }
+
+/* Styling the transaction details container */
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Top right for date */
+.transaction-date {
+    align-self: flex-end;
+    font-size: 20px;
+    color: #262626;
+}
+
+/* Bottom left for merchant */
+.transaction-merchant {
+    align-self: flex-start;
+    font-size: 20px;
+    color: #262626;
+    margin-top: auto;
+}
+
+/* Bottom right for amount */
+.transaction-amount {
+    align-self: flex-end;
+    font-size: 18px;
+    color: #262626;
+    margin-top: auto;
+}
+
+
+.transaction-box h5 {
+    margin: 0;
+    font-size: 18px;
+    color: #262626; /* Darker text color for contrast */
+}
+
+.transaction-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #262626; /* Darker text color for contrast */
 }

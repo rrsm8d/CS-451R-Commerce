@@ -302,7 +302,6 @@ h1[b-0ticmffypf], h4[b-0ticmffypf] {
 .dashboard-container[b-ix3zhoijqt] {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
     height: 75vh; /* Set height to fill the viewport */
 }
 
@@ -313,7 +312,7 @@ h1[b-0ticmffypf], h4[b-0ticmffypf] {
     justify-content: flex-start; /* Start elements at the top */
     height: 100%; /* Fill the height of the container */
     flex: 0 0 auto; /* Ensure the left section does not grow */
-    width: 416px;
+   
     border-radius: 10px;
     padding: 20px;
     color: green;
@@ -398,12 +397,13 @@ h1[b-0ticmffypf], h4[b-0ticmffypf] {
     right: 0;
     bottom: 0;
     background-image: url('/Assets/Backgrounds/CommerceBgVertical.jpg');
-    background-size: contain; /* Make the background image fit within the container */
-    background-position: center;
+    background-size: cover; /* Ensure the background image covers the entire area */
+    background-position: center; /* Center the image within the container */
     background-repeat: no-repeat;
     opacity: 0.2; /* 20% opacity */
     z-index: -1; /* Behind the content */
 }
+
 
 /* Background image for the right section with 20% opacity */
 .dashboard-right[b-ix3zhoijqt]::before {

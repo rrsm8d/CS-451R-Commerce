@@ -48,10 +48,12 @@
         }
 
         // If it's valid
+        // Give the cookies some claims which will help us later when identifying the user
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, LoginViewModel.Email),
-            new Claim(ClaimTypes.Role, userAccount.FirstName)
+            new Claim(ClaimTypes.Role, userAccount.FirstName),
+            new Claim(ClaimTypes.NameIdentifier, userAccount.UserAccountId.ToString()) // Had to convert to string. Not sure how else to store it.
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,5 +1,99 @@
-﻿<h3>UserSettings</h3>
+﻿@page "/usersettings"
+@using Microsoft.AspNetCore.Authorization
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+<!-- This page should not be accessible by people without an auth_token cookie. -->
+
+<PageTitle>Settings</PageTitle>
+
+<h3>UserSettings</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="UserAccount" OnValidSubmit="UpdateUserAccount" FormName="edit" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <InputText id="email" @bind-Value="UserAccount.Email" class="form-control" />
+                <ValidationMessage For="() => UserAccount.Email" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="passwordhash" class="form-label">PasswordHash:</label>
+                <InputText id="passwordhash" @bind-Value="UserAccount.PasswordHash" class="form-control" />
+                <ValidationMessage For="() => UserAccount.PasswordHash" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">FirstName:</label>
+                <InputText id="firstname" @bind-Value="UserAccount.FirstName" class="form-control" />
+                <ValidationMessage For="() => UserAccount.FirstName" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">LastName:</label>
+                <InputText id="lastname" @bind-Value="UserAccount.LastName" class="form-control" />
+                <ValidationMessage For="() => UserAccount.LastName" class="text-danger" />
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </EditForm>
+    </div>
+</div>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    [SupplyParameterFromForm]
+    private UserAccount? UserAccount { get; set; }
+
+    private int userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+
+        if(user.Identity.IsAuthenticated)
+        {
+            userId = Int32.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Convert the user ID to an int
+            UserAccount ??= await context.UserAccount.FirstOrDefaultAsync(m => m.UserAccountId == userId); // Maybe move this out the if statement
+        }
+
+        if (UserAccount is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task UpdateUserAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(UserAccount!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!UserAccountExists(UserAccount!.UserAccountId))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/useraccounts");
+    }
+
+    private bool UserAccountExists(int useraccountid)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.UserAccount.Any(e => e.UserAccountId == useraccountid);
+    }
 
 }

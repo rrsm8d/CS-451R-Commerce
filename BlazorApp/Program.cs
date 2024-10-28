@@ -51,12 +51,12 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseAntiforgery();
 
 // Also for authentication and authorization
 // https://www.youtube.com/watch?v=GKvEuA80FAE
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseAntiforgery(); // For some reason this has to be after authentication. 
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

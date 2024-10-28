@@ -2,7 +2,9 @@
 @using BlazorApp.Models
 @using BlazorApp.Data
 @using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
 @inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -12,7 +14,7 @@
         <h3>Select an account to view</h3>
         <!-- Dropdown menu -->
         <div class="dropdown-container">
-            <select @onchange="OnAccountSelected" class="account-dropdown">
+            <select @onchange="OnAccountSelected" class="account-dropdown" value="@SelectedAccount?.BankAccountId">
                 @foreach (var account in BankAccounts)
 
                 {
@@ -33,37 +35,35 @@
 
     <!-- Right Section -->
     <div class="dashboard-right">
-        <!-- Content of the right section -->
-        <h3>@(SelectedAccount?.AccountType != null ? $"Account Details for {SelectedAccount?.AccountType}" : TransactionsForAccountZero?.Any() == true ? "" : "No Account Selected")</h3>
-
-        <!-- Display transactions-->
+        <h3>@(SelectedAccount != null ? $"Account Details for {SelectedAccount.AccountType}" : "No Account Selected")</h3>
         <h4>Transactions:</h4>
-        @if (TransactionsForAccountZero?.Any() ?? false)
+
+        @if (Transactions.Any())
 
         {
             <div class="transactions-container">
-                @foreach (var transaction in TransactionsForAccountZero)
+                @foreach (var transaction in Transactions)
 
                 {
                     <div class="transaction-box">
                         <div class="transaction-icon">
-                            <span>&#8644;</span> <!-- Arrows -->
+                            <span>&#8644;</span> <!-- Arrows icon for transaction -->
                         </div>
                         <div class="transaction-details">
                             <div class="transaction-date">@transaction.TransactionDate.ToShortDateString()</div>
                             <div class="transaction-merchant">To: @transaction.Merchant</div>
-                            <div class="transaction-amount"> $@transaction.TransactionAmount</div>
+                            <div class="transaction-amount">$@transaction.TransactionAmount</div>
                         </div>
                     </div>
+
                 }
             </div>
-
         }
 
         else
 
         {
-            <p>No transactions available for Account ID 0.</p>
+            <p>No transactions available for the selected account.</p>
         }
     </div>
 </div>
@@ -73,9 +73,7 @@
 
     private BankAccount? SelectedAccount { get; set; }
 
-    private List<Transaction> TransactionsForAccountZero { get; set; } = new(); // New list for transactions of AccountID 0
-
-    private int currentUserId = 0; // Placeholder, replace with actual user ID when login implemented.
+    private List<Transaction> Transactions { get; set; } = new();
 
 
 
@@ -83,63 +81,109 @@
 
     {
 
-        await LoadBankAccountsForUser();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-        await LoadTransactionsForAccountZero(); // Load transactions for AccountID 0
+        var user = authState.User;
+
+
+
+        if (user.Identity?.IsAuthenticated == true)
+
+        {
+
+            var userEmail = user.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (!string.IsNullOrEmpty(userEmail))
+
+            {
+
+                await LoadBankAccountsForUser(userEmail);
+
+            }
+
+        }
 
     }
 
 
 
-    private async Task LoadBankAccountsForUser()
+    private async Task LoadBankAccountsForUser(string email)
 
     {
 
         using var context = DbFactory.CreateDbContext();
 
+        var userAccount = await context.UserAccount.FirstOrDefaultAsync(u => u.Email == email);
 
 
-        // Fetch accounts for the user with ID = 0
 
-        BankAccounts = await context.BankAccount
+        if (userAccount != null)
 
-            .Where(account => account.UserAccountId == currentUserId)
+        {
 
-            .ToListAsync();
+            BankAccounts = await context.BankAccount
+
+                .Where(account => account.UserAccountId == userAccount.UserAccountId)
+
+                .ToListAsync();
+
+
+
+            // Set the default selected account if any accounts are loaded
+
+            if (BankAccounts.Any())
+
+            {
+
+                SelectedAccount = BankAccounts.First();
+
+                await LoadTransactionsForSelectedAccount(); // Load transactions for the default account
+
+            }
+
+        }
 
     }
 
 
 
-    private async Task LoadTransactionsForAccountZero()
+    private async Task LoadTransactionsForSelectedAccount()
 
     {
 
-        using var context = DbFactory.CreateDbContext();
+        Transactions.Clear();
 
+        if (SelectedAccount != null)
 
+        {
 
-        // Fetch transactions specifically for AccountID 0
+            using var context = DbFactory.CreateDbContext();
 
-        TransactionsForAccountZero = await context.Transaction
+            Transactions = await context.Transaction
 
-            .Where(transaction => transaction.AccountId == 0)
+                .Where(t => t.AccountId == SelectedAccount.BankAccountId)
 
-            .ToListAsync();
+                .ToListAsync();
+
+        }
+
+        StateHasChanged(); // Ensure the UI updates with the loaded transactions
 
     }
 
 
 
-    private void OnAccountSelected(ChangeEventArgs e)
+    private async void OnAccountSelected(ChangeEventArgs e)
 
     {
 
-        if (int.TryParse(e.Value.ToString(), out int accountId))
+        if (int.TryParse(e.Value?.ToString(), out int accountId))
 
         {
 
             SelectedAccount = BankAccounts.FirstOrDefault(account => account.BankAccountId == accountId);
+
+            await LoadTransactionsForSelectedAccount(); // Load transactions for the newly selected account
 
         }
 

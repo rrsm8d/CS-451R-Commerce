@@ -24,3 +24,4 @@ BlazorApp/obj/
 /BlazorApp/obj/Debug/net8.0/BlazorApp.pdb
 /BlazorApp/obj/Debug/net8.0/BlazorApp.sourcelink.json
 /BlazorApp/obj/Debug/net8.0/BlazorApp.csproj.FileListAbsolute.txt
+/BlazorApp/bin/Debug/net8.0/BlazorApp.staticwebassets.runtime.json

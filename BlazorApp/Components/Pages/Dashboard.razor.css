@@ -1,7 +1,6 @@
 ﻿.dashboard-container {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
     height: 75vh; /* Set height to fill the viewport */
 }
 
@@ -12,7 +11,7 @@
     justify-content: flex-start; /* Start elements at the top */
     height: 100%; /* Fill the height of the container */
     flex: 0 0 auto; /* Ensure the left section does not grow */
-    width: 416px;
+   
     border-radius: 10px;
     padding: 20px;
     color: green;
@@ -97,12 +96,13 @@
     right: 0;
     bottom: 0;
     background-image: url('/Assets/Backgrounds/CommerceBgVertical.jpg');
-    background-size: contain; /* Make the background image fit within the container */
-    background-position: center;
+    background-size: cover; /* Ensure the background image covers the entire area */
+    background-position: center; /* Center the image within the container */
     background-repeat: no-repeat;
     opacity: 0.2; /* 20% opacity */
     z-index: -1; /* Behind the content */
 }
+
 
 /* Background image for the right section with 20% opacity */
 .dashboard-right::before {
@@ -287,9 +287,25 @@
     position: relative;
 }
 
+.transaction-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    width: 100%;
+    max-width: 1324px;
+    background: #FAFAFB;
+    opacity: 0.95;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    position: relative;
+    gap: 20px;
+}
+
+/* Icon on the far left */
 .transaction-icon {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -298,42 +314,41 @@
     border: 1px solid #333333;
 }
 
+    /* Icon styling */
     .transaction-icon span {
         color: white;
         font-size: 16px;
     }
 
-/* Styling the transaction details container */
+/* Container for transaction details, aligned right */
 .transaction-details {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    flex-direction: column;
     width: 100%;
 }
 
-/* Top right for date */
+/* Date aligned at the top right */
 .transaction-date {
     align-self: flex-end;
-    font-size: 20px;
+    font-size: 14px;
     color: #262626;
 }
 
-/* Bottom left for merchant */
+/* Merchant name aligned at the bottom left */
 .transaction-merchant {
-    align-self: flex-start;
-    font-size: 20px;
+    font-size: 18px;
     color: #262626;
-    margin-top: auto;
+    font-weight: bold;
 }
 
-/* Bottom right for amount */
+/* Amount aligned at the bottom right */
 .transaction-amount {
     align-self: flex-end;
     font-size: 18px;
     color: #262626;
-    margin-top: auto;
+    font-weight: bold;
 }
-
 
 .transaction-box h5 {
     margin: 0;
@@ -345,4 +360,44 @@
     margin: 0;
     font-size: 14px;
     color: #262626; /* Darker text color for contrast */
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.page-nav,
+.page-number {
+    background: none;
+    border: none;
+    color: #007AA3; /* Set text color to #007AA3 */
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+}
+
+    .page-number.active {
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: default;
+    }
+
+    .page-number:hover:not(.active),
+    .page-nav:hover {
+        color: #005f7a; /* Slightly darker shade for hover effect */
+    }
+
+    .page-number:disabled,
+    .page-nav:disabled {
+        color: #ccc; /* Color for disabled state */
+        cursor: not-allowed;
+    }
+
+.dots {
+    color: #007AA3; /* Color for the "..." */
+    font-size: 18px;
 }

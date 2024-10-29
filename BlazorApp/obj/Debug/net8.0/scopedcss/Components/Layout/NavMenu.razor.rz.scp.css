@@ -70,6 +70,7 @@
         height: 3rem;
         line-height: 3rem;
         width: 100%;
+        padding: 5px 10px;
     }
 
 .nav-item[b-g8o6n169oq]  a.active {
@@ -138,3 +139,6 @@
     }
 }
 
+[b-g8o6n169oq] .nav-link {
+    padding: 5px 10px !important; /* I have to force this because maybe a name collision with the new bootstrap? */
+}

@@ -5,53 +5,52 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<PageTitle>[Debug] Edit</PageTitle>
+<PageTitle>Settings</PageTitle>
 
-<h1>Edit</h1>
 
-<h2>UserAccount</h2>
-<hr />
 @if (UserAccount is null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm method="post" Model="UserAccount" OnValidSubmit="UpdateUserAccount" FormName="edit" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <input type="hidden" name="UserAccount.UserAccountId" value="@UserAccount.UserAccountId" />
-                <input type="hidden" name="UserAccount.PasswordHash" value="@UserAccount.PasswordHash" />
-                <input type="hidden" name="UserAccount.CreationDate" value="@UserAccount.CreationDate" />
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email:</label>
-                    <InputText id="email" @bind-Value="UserAccount.Email" class="form-control" />
-                    <ValidationMessage For="() => UserAccount.Email" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="firstname" class="form-label">FirstName:</label>
-                    <InputText id="firstname" @bind-Value="UserAccount.FirstName" class="form-control" />
-                    <ValidationMessage For="() => UserAccount.FirstName" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="lastname" class="form-label">LastName:</label>
-                    <InputText id="lastname" @bind-Value="UserAccount.LastName" class="form-control" />
-                    <ValidationMessage For="() => UserAccount.LastName" class="text-danger" />
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </EditForm>
+    <!--
+        This kinda looks like shit. I'm not quite sure how to style this
+    -->
+    <div class="settings-container">
+        <div class="row label-container">
+            <div class="">
+                <EditForm method="post" Model="UserAccount" OnValidSubmit="UpdateUserAccount" FormName="edit" Enhance>
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <input type="hidden" name="UserAccount.UserAccountId" value="@UserAccount.UserAccountId" />
+                    <input type="hidden" name="UserAccount.PasswordHash" value="@UserAccount.PasswordHash" />
+                    <input type="hidden" name="UserAccount.CreationDate" value="@UserAccount.CreationDate" />
+                    <div class="mb-3">
+                        <label for="email" class="form-label">New Email:</label>
+                        <InputText id="email" @bind-Value="UserAccount.Email" class="form-control" />
+                        <ValidationMessage For="() => UserAccount.Email" class="text-danger" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">New FirstName:</label>
+                        <InputText id="firstname" @bind-Value="UserAccount.FirstName" class="form-control" />
+                        <ValidationMessage For="() => UserAccount.FirstName" class="text-danger" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">New LastName:</label>
+                        <InputText id="lastname" @bind-Value="UserAccount.LastName" class="form-control" />
+                        <ValidationMessage For="() => UserAccount.LastName" class="text-danger" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </EditForm>
+            </div>
         </div>
     </div>
 }
 
-<div>
-    <a href="/useraccounts">Back to List</a>
-</div>
-
 @code {
     // Values we want to keep
+    // Pulled from the hidden input values
     private int UserAccountId { get; set; }
     private DateTime CreationDate { get; set; }
     private string PasswordHash { get; set; }

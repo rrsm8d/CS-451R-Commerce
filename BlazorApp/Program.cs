@@ -32,6 +32,9 @@ builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 
 
+//Blazor Bootstrap service
+builder.Services.AddBlazorBootstrap();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

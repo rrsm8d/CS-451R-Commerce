@@ -16,7 +16,6 @@
         <div class="dropdown-container">
             <select @onchange="OnAccountSelected" class="account-dropdown" value="@SelectedAccount?.BankAccountId">
                 @foreach (var account in BankAccounts)
-
                 {
                     <option value="@account.BankAccountId">@account.AccountType - Balance: @account.AccountBalance</option>
                 }
@@ -39,11 +38,9 @@
         <h4>Transactions:</h4>
 
         @if (Transactions.Any())
-
         {
             <div class="transactions-container">
                 @foreach (var transaction in Transactions)
-
                 {
                     <div class="transaction-box">
                         <div class="transaction-icon">
@@ -55,151 +52,114 @@
                             <div class="transaction-amount">$@transaction.TransactionAmount</div>
                         </div>
                     </div>
-
                 }
             </div>
         }
-
         else
-
         {
             <p>No transactions available for the selected account.</p>
         }
 
-        <Pagination TotalPages="8" />
+        <!-- Pagination Component -->
+        <Pagination ActivePageNumber="@currentPageNumber"
+                    TotalPages="@TotalPages"
+                    DisplayPages="5"
+                    FirstLinkIcon="IconName.ChevronDoubleLeft"
+                    PreviousLinkIcon="IconName.ChevronLeft"
+                    NextLinkIcon="IconName.ChevronRight"
+                    LastLinkIcon="IconName.ChevronDoubleRight"
+                    PageChanged="OnPageChangedAsync" />
+
+
     </div>
 </div>
 
 @code {
     private List<BankAccount> BankAccounts { get; set; } = new();
-
     private BankAccount? SelectedAccount { get; set; }
-
     private List<Transaction> Transactions { get; set; } = new();
 
+    private const int TransactionsPerPage = 5;
+    int currentPageNumber = 1;
+    private int TotalPages { get; set; }
+
+    private async Task OnPageChangedAsync(int newPageNumber)
+    {
+        await Task.Run(() => { currentPageNumber = newPageNumber; 
+        });
+        await LoadTransactionsForSelectedAccount();
+    }
 
 
     protected override async Task OnInitializedAsync()
-
     {
-
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
         var user = authState.User;
 
-
-
         if (user.Identity?.IsAuthenticated == true)
-
         {
-
             var userEmail = user.FindFirst(ClaimTypes.Name)?.Value;
-
             if (!string.IsNullOrEmpty(userEmail))
-
             {
-
                 await LoadBankAccountsForUser(userEmail);
-
             }
-
         }
-
     }
-
-
 
     private async Task LoadBankAccountsForUser(string email)
-
     {
-
         using var context = DbFactory.CreateDbContext();
-
         var userAccount = await context.UserAccount.FirstOrDefaultAsync(u => u.Email == email);
 
-
-
         if (userAccount != null)
-
         {
-
             BankAccounts = await context.BankAccount
-
                 .Where(account => account.UserAccountId == userAccount.UserAccountId)
-
                 .ToListAsync();
-
-
-
-            // Set the default selected account if any accounts are loaded
 
             if (BankAccounts.Any())
-
             {
-
                 SelectedAccount = BankAccounts.First();
-
-                await LoadTransactionsForSelectedAccount(); // Load transactions for the default account
-
+                await LoadTransactionsForSelectedAccount();
             }
-
         }
-
     }
-
-
 
     private async Task LoadTransactionsForSelectedAccount()
-
     {
-
         Transactions.Clear();
-
         if (SelectedAccount != null)
-
         {
-
             using var context = DbFactory.CreateDbContext();
 
+            var totalTransactions = await context.Transaction
+                .CountAsync(t => t.AccountId == SelectedAccount.BankAccountId);
+            TotalPages = (int)Math.Ceiling((double)totalTransactions / TransactionsPerPage);
+
             Transactions = await context.Transaction
-
                 .Where(t => t.AccountId == SelectedAccount.BankAccountId)
-
+                .OrderByDescending(t => t.TransactionDate)
+                .Skip((currentPageNumber - 1) * TransactionsPerPage)
+                .Take(TransactionsPerPage)
                 .ToListAsync();
-
         }
 
-        StateHasChanged(); // Ensure the UI updates with the loaded transactions
-
+        StateHasChanged();
     }
-
-
 
     private async void OnAccountSelected(ChangeEventArgs e)
-
     {
-
         if (int.TryParse(e.Value?.ToString(), out int accountId))
-
         {
-
             SelectedAccount = BankAccounts.FirstOrDefault(account => account.BankAccountId == accountId);
-
-            await LoadTransactionsForSelectedAccount(); // Load transactions for the newly selected account
-
+            currentPageNumber = 1; // Reset to first page on account change
+            await LoadTransactionsForSelectedAccount();
         }
-
     }
 
-
-
     private void OnToggleSwitchChange(ChangeEventArgs e)
-
     {
-
         bool isToggled = (bool)e.Value;
-
         // Implement the logic based on the toggle switch state
-
     }
 }

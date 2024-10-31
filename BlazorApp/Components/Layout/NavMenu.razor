@@ -3,23 +3,49 @@
 </div>
 
 <div class="navbar-btn-container">
-    <div>
-        <NavLink class="nav-link" href="" Match="NavLinkMatch.All" ActiveClass="active-link">
-            <span aria-hidden="true"></span> Home
-        </NavLink>
-    </div>
+    <AuthorizeView>
 
-    <div>
-        <NavLink class="nav-link" href="/nothinghere" Match="NavLinkMatch.All" ActiveClass="active-link">
-            <span aria-hidden="true"></span> Debug
-        </NavLink>
-    </div>
+        <NotAuthorized>
+            <div>
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All" ActiveClass="active-link">
+                    <span aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
 
-    <div>
-        <NavLink class="nav-link" href="/nothinghere" Match="NavLinkMatch.All" ActiveClass="active-link">
-            <span aria-hidden="true"></span> Debug
-        </NavLink>
-    </div>
+            <div>
+                <NavLink class="nav-link" href="/useraccounts" Match="NavLinkMatch.All" ActiveClass="active-link">
+                    <span aria-hidden="true"></span> UADebug
+                </NavLink>
+            </div>
+
+            <div>
+                <NavLink class="nav-link" href="/transactions" Match="NavLinkMatch.All" ActiveClass="active-link">
+                    <span aria-hidden="true"></span> TRDebug
+                </NavLink>
+            </div>
+        </NotAuthorized>
+
+        <Authorized>
+            <div>
+                <NavLink class="nav-link" href="/dashboard" Match="NavLinkMatch.All" ActiveClass="active-link">
+                    <span aria-hidden="true"></span> Dashboard
+                </NavLink>
+            </div>
+
+            <div>
+                <NavLink class="nav-link" href="/goals" Match="NavLinkMatch.All" ActiveClass="active-link">
+                    <span aria-hidden="true"></span> Goals
+                </NavLink>
+            </div>
+
+            <div>
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All" ActiveClass="active-link">
+                    <span aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+        </Authorized>
+
+    </AuthorizeView>
 </div>
 
 <div class="navbar-btn-container" style="justify-content: flex-end">

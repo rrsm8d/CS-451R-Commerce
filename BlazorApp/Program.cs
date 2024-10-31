@@ -59,7 +59,8 @@ app.UseStaticFiles();
 // https://www.youtube.com/watch?v=GKvEuA80FAE
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseAntiforgery(); // For some reason this has to be after authentication. 
+// For some reason this has to be after authentication. If antiforgery issues are giving you trouble, this is the place to temporarily (or permanently) comment out
+app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

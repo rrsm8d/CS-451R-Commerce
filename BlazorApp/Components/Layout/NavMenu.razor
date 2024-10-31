@@ -25,6 +25,7 @@
 <div class="navbar-btn-container" style="justify-content: flex-end">
     <AuthorizeView>
 
+        <!-- View for when the user is logged out -->
         <NotAuthorized>
     <div>
         <NavLink class="nav-link" href="/login" Match="NavLinkMatch.All" ActiveClass="active-link">
@@ -40,7 +41,7 @@
         </NotAuthorized>
 
 
-
+        <!-- View for when the user is logged in -->
         <Authorized>
     <div>
         <NavLink class="nav-link" href="/logout">

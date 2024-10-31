@@ -27,9 +27,11 @@
 
 @code {
     // https://www.youtube.com/watch?v=GKvEuA80FAE
+    // A viewmodel entirely for the purpose of pulling data from the user. Made so the password can be grabbed first before submission, and the date can also be set before submission
     [SupplyParameterFromForm]
     public LoginViewModel LoginViewModel { get; set; } = new();
 
+    // Will temporarily store the hash of the LoginViewModel's password before verifying later
     private readonly PasswordHasher<UserAccount> _passwordHasher = new();
     private string? errorMessage = string.Empty;
 
@@ -40,6 +42,7 @@
     {
         using var context = DbFactory.CreateDbContext();
         // FIND the account with the provided email.
+        // Uhhh maybe I should update the UserAccount model to also make email a unique primary key.
         var userAccount = context.UserAccount.Where(x => x.Email == LoginViewModel.Email).FirstOrDefault();
         // Does the account not exist, or does the hash not exist?
         if (userAccount == null || (_passwordHasher.VerifyHashedPassword(userAccount, userAccount.PasswordHash, LoginViewModel.Password)) == PasswordVerificationResult.Failed)
@@ -54,6 +57,7 @@
         {
             new Claim(ClaimTypes.Name, LoginViewModel.Email),
             new Claim(ClaimTypes.Role, userAccount.FirstName),
+            // We can use this NameIdentifier claim to get the user's ID later in the application. 
             new Claim(ClaimTypes.NameIdentifier, userAccount.UserAccountId.ToString()) // Had to convert to string. Not sure how else to store it.
         };
 

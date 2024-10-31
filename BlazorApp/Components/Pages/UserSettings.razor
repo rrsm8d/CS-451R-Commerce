@@ -50,22 +50,24 @@ else
 
 @code {
     // Values we want to keep
-    // Pulled from the hidden input values
+    // Pulled from the hidden input values automatically.
     private int UserAccountId { get; set; }
     private DateTime CreationDate { get; set; }
     private string PasswordHash { get; set; }
 
     [SupplyParameterFromForm]
-    private UserAccount? UserAccount { get; set; }
+    private UserAccount? UserAccount { get; set; } // Not making a new UserAccount, just something to temporarily hold the model
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-
+        // Grab cookies
         var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authenticationState.User;
-        UserAccountId = Int32.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Convert the user ID to an int
+        // Convert the user ID to an int since the way the claim was implemented was jank
+        UserAccountId = Int32.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value); 
 
+        // Have the temporary UserAccount hold the old user account
         UserAccount ??= await context.UserAccount.FirstOrDefaultAsync(m => m.UserAccountId == UserAccountId);
 
         if (UserAccount is null)
@@ -87,17 +89,18 @@ else
         }
         catch (DbUpdateConcurrencyException)
         {
+            // If for some reason the ID was fucked up and doesn't exist
             if (!UserAccountExists(UserAccount!.UserAccountId))
             {
-                NavigationManager.NavigateTo("notfound");
+                NavigationManager.NavigateTo("notfound"); // We don't have this page lol
             }
             else
             {
                 throw;
             }
         }
-
-        NavigationManager.NavigateTo("/useraccounts");
+        //
+        NavigationManager.NavigateTo("/dashboard");
     }
 
     private bool UserAccountExists(int useraccountid)

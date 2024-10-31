@@ -13,7 +13,7 @@ namespace BlazorApp.Data
             : base(options)
         {
         }
-
+        // Don't touch this
         public DbSet<BlazorApp.Models.UserAccount> UserAccount { get; set; } = default!;
         public DbSet<BlazorApp.Models.BankAccount> BankAccount { get; set; } = default!;
         public DbSet<BlazorApp.Models.BudgetPlan> BudgetPlan { get; set; } = default!;

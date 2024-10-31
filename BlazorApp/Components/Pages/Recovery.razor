@@ -1,0 +1,37 @@
+@page "/Recovery"
+
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Recovery</PageTitle>
+
+<div class="recovery-container">
+    <h2>Account Recovery</h2>
+    <p>Please enter your email address to receive a password reset link.</p>
+    <EditForm Model="@RecoveryModel" OnValidSubmit="HandleRecovery">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="input-group">
+            @* <label for="email">Email</label> *@
+            <InputText placeholder='Email' id="email" class="form-control input-field" @bind-Value="RecoveryModel.Email" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Recovery Email</button>
+    </EditForm>
+    <a href="/login" class="back-link">Back to Login</a>
+</div>
+
+@code {
+    private RecoveryFormModel RecoveryModel = new RecoveryFormModel();
+    private async Task HandleRecovery()
+    {
+        // Your password recovery logic here
+    }
+
+    public class RecoveryFormModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}

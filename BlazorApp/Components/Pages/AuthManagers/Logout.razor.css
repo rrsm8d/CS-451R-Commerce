@@ -1,0 +1,17 @@
+﻿.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 5% 10%;
+    padding: 2% 5%;
+
+    height: 500px;
+    max-height: 500px;
+}
+
+h1, h4 {
+    color: #006747;
+    text-shadow: 0.5px 0.5px 2px black;
+}

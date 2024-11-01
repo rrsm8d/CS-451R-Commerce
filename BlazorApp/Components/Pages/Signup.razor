@@ -1,7 +1,4 @@
 ﻿@page "/signup"
-@using Microsoft.EntityFrameworkCore
-@using BlazorApp.Models
-@using Microsoft.AspNetCore.Identity
 @inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
 @inject NavigationManager NavigationManager
 
@@ -35,27 +32,10 @@
 
     <div class="button-container">
         <button class="btn btn-primary signup-button" type="submit" form="create">Signup!</button>
-        <a href="/login" class="btn btn-primary login-button" type="button">Back to login.</a>
+        <a href="/login" class="btn btn-primary login-button" type="button">Back to login</a>
     </div>
 
 </div>
-
-<style>
-    /* Moved to be in the HTML because Blazor fuckery with EditForm and InputText */
-    /* TO-DO: Simply adding ::deep apparently works when testing other pages. Move this to the css and debug! */
-    .input-box {
-        width: 30% !important;
-        height: 3rem;
-        border-radius: 100px;
-    }
-
-    .signup-form {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        width: 100%;
-    }
-</style>
 
 <!--TO-DO: Require users to re-enter their password-->
 <!--TO-DO: Add basic regex to better check for valid emails, add character limits to other fields.-->
@@ -72,10 +52,17 @@
     {
         // Hash the password
         UserAccount.PasswordHash = _passwordHasher.HashPassword(UserAccount, UserAccount.PasswordHash);
+        // Set the date
         UserAccount.CreationDate = DateTime.Now;
+
+        // Access the DB context
         using var context = DbFactory.CreateDbContext();
+
+        // Create the entity
         context.UserAccount.Add(UserAccount);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/useraccounts"); // TO-DO: Change me in production to /login
+
+        // Move the user somewhere else
+        NavigationManager.NavigateTo("/login"); 
     }
 }

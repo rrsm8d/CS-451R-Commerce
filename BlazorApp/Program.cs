@@ -2,6 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BlazorApp.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Components;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<BlazorAppContext>(options =>
@@ -10,6 +15,26 @@ builder.Services.AddDbContextFactory<BlazorAppContext>(options =>
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Authentication?
+// I was following this video here: https://www.youtube.com/watch?v=GKvEuA80FAE
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "auth_token"; // Custom cookie name
+        options.LoginPath = "/login";
+        options.Cookie.MaxAge = TimeSpan.FromDays(7);
+        options.AccessDeniedPath = "/access-denied";
+    });
+// Authorization
+builder.Services.AddAuthorization();
+// Passing the authentication state thoughout the application
+builder.Services.AddCascadingAuthenticationState();
+
+
+//Blazor Bootstrap service
+builder.Services.AddBlazorBootstrap();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -29,6 +54,12 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+// Also for authentication and authorization
+// https://www.youtube.com/watch?v=GKvEuA80FAE
+app.UseAuthentication();
+app.UseAuthorization();
+// For some reason this has to be after authentication. If antiforgery issues are giving you trouble, this is the place to temporarily (or permanently) comment out
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

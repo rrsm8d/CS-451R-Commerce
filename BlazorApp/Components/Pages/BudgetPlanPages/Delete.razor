@@ -29,6 +29,14 @@
             <dt class="col-sm-2">BudgetExpenditures</dt>
             <dd class="col-sm-10">@budgetplan.BudgetExpenditures</dd>
         </dl>
+        <dl class="row">
+            <dt class="col-sm-2">StartDate</dt>
+            <dd class="col-sm-10">@budgetplan.StartDate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">EndDate</dt>
+            <dd class="col-sm-10">@budgetplan.EndDate</dd>
+        </dl>
         <EditForm method="post" Model="budgetplan" OnValidSubmit="DeleteBudgetPlan" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(budgetplan is null)">Delete</button> |
             <a href="/budgetplans">Back to List</a>

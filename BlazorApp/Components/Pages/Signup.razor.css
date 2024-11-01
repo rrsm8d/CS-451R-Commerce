@@ -55,6 +55,19 @@
 }
 */
 
+::deep .input-box {
+    width: 30% !important;
+    height: 3rem;
+    border-radius: 100px;
+}
+
+::deep .signup-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
 .button-container {
     display: flex;
     flex-direction: column;

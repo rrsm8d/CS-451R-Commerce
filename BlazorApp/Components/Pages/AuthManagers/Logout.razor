@@ -1,0 +1,32 @@
+﻿@page "/logout"
+@inject NavigationManager NavigationManager
+@attribute [StreamRendering]
+<!-- Stream rendering should fix the login message not displaying -->
+
+<PageTitle>Logging Out...</PageTitle>
+
+<div class="message-container">
+
+    <h1> You have been logged out </h1>
+    <h4> Redirecting... </h4>
+
+</div>
+
+@code {
+    [CascadingParameter]
+    public HttpContext HttpContext{ get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if(HttpContext.User.Identity.IsAuthenticated)
+        {
+            await HttpContext.SignOutAsync();
+            NavigationManager.NavigateTo("/logout", true);
+        } else
+        {
+            await Task.Delay(3000);
+            NavigationManager.NavigateTo("/#");
+        }
+    }
+}

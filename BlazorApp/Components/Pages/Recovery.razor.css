@@ -2,7 +2,7 @@
     max-width: 500px;
     margin: 3rem auto;
     padding: 2rem;
-    background-color: #5da5bd; /* Blue background similar to the login page */
+    background-color: #007AA3; /* Blue background similar to the login page */
     border-radius: 15px; /* Slightly more rounded corners for modern look */
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     text-align: center;
@@ -31,29 +31,41 @@ h2 {
     margin-bottom: 0.5rem;
 }
 
-.input-field {
+::deep .input-field {
     width: 100%;
     padding: 0.8rem;
     font-size: 1rem;
-    border-radius: 25px;
+    border-radius: 100px;
     border: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     outline: #32a343;
 }
 
+
+
+
+::deep .input-box {
+    width: 30%;
+    height: 3rem;
+    border-radius: 100px;
+}
+
+
 .btn-primary {
-    background-color: #38b44c; /* Green button like the login button */
-    color: white;
-    padding: 0.8rem 1.8rem; /* Increased padding for better prominence */
-    font-size: 1rem;
-    border: none;
-    border-radius: 25px;
+    color: #FFFFFF;
+    background-color: #4FA800;
+    border-color: #FFFFFF;
+
+    width: 60%;
+    height: 3rem;
+    border-radius: 100px;
+
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition */
 }
 
 .btn-primary:hover {
-    background-color: #32a343;
+    background-color: #4FA800;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Hover effect for better feedback */
 }
 

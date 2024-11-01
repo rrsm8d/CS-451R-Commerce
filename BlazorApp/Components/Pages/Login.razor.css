@@ -86,3 +86,11 @@
     border-radius: 100px;
 }
 
+.forgot-password-link {
+    color: white;
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}

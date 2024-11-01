@@ -18,6 +18,8 @@
     <PropertyColumn Property="budgetplan => budgetplan.AccountId" />
     <PropertyColumn Property="budgetplan => budgetplan.BudgetAmount" />
     <PropertyColumn Property="budgetplan => budgetplan.BudgetExpenditures" />
+    <PropertyColumn Property="budgetplan => budgetplan.StartDate" />
+    <PropertyColumn Property="budgetplan => budgetplan.EndDate" />
 
     <TemplateColumn Context="budgetplan">
         <a href="@($"budgetplans/edit?budgetplanid={budgetplan.BudgetPlanId}")">Edit</a> |

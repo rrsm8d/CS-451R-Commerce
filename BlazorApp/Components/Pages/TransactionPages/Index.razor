@@ -19,8 +19,6 @@
     <PropertyColumn Property="transaction => transaction.TransactionAmount" />
     <PropertyColumn Property="transaction => transaction.TransactionDate" />
     <PropertyColumn Property="transaction => transaction.Merchant" />
-    <PropertyColumn Property="transaction => transaction.StartDate" />
-    <PropertyColumn Property="transaction => transaction.EndDate" />
 
     <TemplateColumn Context="transaction">
         <a href="@($"transactions/edit?transactionid={transaction.TransactionId}")">Edit</a> |

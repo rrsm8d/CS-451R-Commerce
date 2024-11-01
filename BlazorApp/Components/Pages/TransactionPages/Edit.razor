@@ -42,16 +42,6 @@ else
                     <InputText id="merchant" @bind-Value="Transaction.Merchant" class="form-control" />
                     <ValidationMessage For="() => Transaction.Merchant" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="startdate" class="form-label">StartDate:</label>
-                    <InputDate id="startdate" @bind-Value="Transaction.StartDate" class="form-control" />
-                    <ValidationMessage For="() => Transaction.StartDate" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="enddate" class="form-label">EndDate:</label>
-                    <InputDate id="enddate" @bind-Value="Transaction.EndDate" class="form-control" />
-                    <ValidationMessage For="() => Transaction.EndDate" class="text-danger" />
-                </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
         </div>

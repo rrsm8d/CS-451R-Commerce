@@ -13,6 +13,8 @@ namespace BlazorApp.Models
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal BudgetExpenditures { get; set; } // Total spent so far
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
     }
 }

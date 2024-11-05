@@ -6,10 +6,12 @@ namespace BlazorApp.Models
 {
     public class UserAccount
     {
+        [Required]
         public int UserAccountId { get; set; } // Primary key
-        //[Required]
-        [StringLength(100)]
-        public string Email { get; set; } // TO-DO: This should also be a primary key. Not sure how to yet.
+
+        [EmailAddress]
+        [Required]
+        public string Email { get; set; } // Changes were made to dbContext to require uniqueness to this attribute. Found in Data/BlazorAppContext.cs
         [StringLength(100)]
         public string PasswordHash { get; set; } // Don't store passwords in plaintext!
         [StringLength(100)]

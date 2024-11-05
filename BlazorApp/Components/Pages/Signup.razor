@@ -50,19 +50,28 @@
 
     private async Task AddUserAccount()
     {
-        // Hash the password
-        UserAccount.PasswordHash = _passwordHasher.HashPassword(UserAccount, UserAccount.PasswordHash);
-        // Set the date
-        UserAccount.CreationDate = DateTime.Now;
-
         // Access the DB context
         using var context = DbFactory.CreateDbContext();
 
-        // Create the entity
-        context.UserAccount.Add(UserAccount);
-        await context.SaveChangesAsync();
+        // Check if email is already in use
+        var tempAccount = context.UserAccount.Where(x => x.Email == UserAccount.Email).FirstOrDefault();
+        if (tempAccount == null) // If it doesn't exists, we can make the new UserAccount
+        {
+            // Hash the password
+            UserAccount.PasswordHash = _passwordHasher.HashPassword(UserAccount, UserAccount.PasswordHash);
+            // Set the date
+            UserAccount.CreationDate = DateTime.Now;
+            // Create the entity
+            context.UserAccount.Add(UserAccount);
+            await context.SaveChangesAsync();
 
-        // Move the user somewhere else
-        NavigationManager.NavigateTo("/login"); 
+            // Move the user somewhere else
+            NavigationManager.NavigateTo("/login");
+            return;
+        } else
+        {
+            // TO-DO: Handle errors
+            return;
+        }
     }
 }

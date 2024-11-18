@@ -45,7 +45,6 @@
     {
         using var context = DbFactory.CreateDbContext();
         // FIND the account with the provided email.
-        // Uhhh maybe I should update the UserAccount model to also make email a unique primary key.
         var userAccount = context.UserAccount.Where(x => x.Email == LoginViewModel.Email).FirstOrDefault();
         // Does the account not exist, or does the hash not exist?
         if (userAccount == null || (_passwordHasher.VerifyHashedPassword(userAccount, userAccount.PasswordHash, LoginViewModel.Password)) == PasswordVerificationResult.Failed)

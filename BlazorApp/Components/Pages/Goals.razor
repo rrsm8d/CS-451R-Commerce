@@ -1,0 +1,265 @@
+﻿@page "/goals"
+@using BlazorApp.Models
+@using BlazorApp.Data
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+@inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Goals</PageTitle>
+
+<div class="dashboard-container">
+    <!-- Left Section -->
+    <div class="dashboard-left">
+        <h3>Select an account to view</h3>
+        <!-- Dropdown menu -->
+        <div class="dropdown-container">
+            <select @onchange="OnAccountSelected" class="account-dropdown" value="@SelectedAccount?.BankAccountId">
+                @foreach (var account in BankAccounts)
+                {
+                    <option value="@account.BankAccountId">@account.AccountType - Balance: @account.AccountBalance</option>
+                }
+            </select>
+        </div>
+
+        <!-- Toggle Switch -->
+        <div class="toggle-switch">
+            <input type="checkbox" id="toggleView" class="toggle-checkbox" @onchange="OnToggleSwitchChange">
+            <label for="toggleView" class="toggle-label">
+                <span class="toggle-switch-text" data-view="list">Creation</span>
+                <span class="toggle-switch-text" data-view="graphical">Summary</span>
+            </label>
+        </div>
+        
+    </div>
+
+    <!-- Right Section -->
+    <div class="dashboard-right">
+        @if (isCreationView)
+        {
+        <div>
+            <Grid @ref="grid"
+                  TItem="BudgetPlan"
+                  Class="table table-hover table-bordered table-striped"
+                  AllowFiltering="true"
+                  AllowPaging="true"
+                  PageSize="5"
+                  AllowSorting="true"
+                  AllowSelection="true"
+                  SelectionMode="GridSelectionMode.Multiple"
+                  SelectedItemsChanged="OnSelectedItemsChanged"
+                  Data="goals"
+                  Responsive="true">
+
+                <GridColumns>
+                    <GridColumn TItem="BudgetPlan" PropertyName="BudgetPlanId" SortString="BudgetPlanId" SortKeySelector="item => item.BudgetPlanId" HeaderText="Budget ID" HeaderTextAlignment="Alignment.Center">
+                        @context.BudgetPlanId
+                    </GridColumn>
+                    <GridColumn TItem="BudgetPlan" PropertyName="BudgetAmount" SortString="BudgetAmount" SortKeySelector="item => item.BudgetAmount" HeaderText="Set budget">
+                        @context.BudgetAmount
+                    </GridColumn>
+                    <GridColumn TItem="BudgetPlan" PropertyName="BudgetExpenditures" SortString="BudgetExpenditures" SortKeySelector="item => item.BudgetExpenditures" HeaderText="Spent So far" HeaderTextAlignment="Alignment.Center">
+                        @context.BudgetExpenditures
+                    </GridColumn>
+                    <GridColumn TItem="BudgetPlan" PropertyName="StartDate" SortString="StartDate" SortKeySelector="item => item.StartDate" HeaderText="Start Date" HeaderTextAlignment="Alignment.Center">
+                        @context.StartDate
+                    </GridColumn>
+                    <GridColumn TItem="BudgetPlan" PropertyName="EndDate" SortString="EndDate" SortKeySelector="item => item.EndDate" HeaderText="End Date" HeaderTextAlignment="Alignment.End">
+                        @context.EndDate
+                    </GridColumn>
+                </GridColumns>
+            </Grid>
+            <button class="btn btn-primary delete-button" @onclick="DeleteSelected">Delete Selected</button>
+        </div>
+        <!--
+        <div class="mt-3">
+            Selected Items Count: @selectedGoals.Count
+        </div>
+
+        <div class="mt-2">
+            Selected Goals:
+            <ul>
+                @foreach (var goal in selectedGoals)
+                {
+                    <li>@goal.BudgetPlanId</li>
+                }
+            </ul>
+        </div>
+        -->
+        <div>
+            <h1>Add goal for @SelectedAccount?.AccountType </h1>
+            <div class="form-container">
+
+                <EditForm method="post" class="editform" Model="BudgetPlan" OnValidSubmit="AddBudgetPlan" FormName="create" id="create" Enhance>
+                    <fieldset class="input-field fieldset-container">
+                        <input type="hidden" name="BudgetPlan.AccountId" value="@BudgetPlan.AccountId" />
+                        <input type="hidden" name="BudgetPlan.BudgetExpenditures" value="@BudgetPlan.BudgetExpenditures" />
+                        <InputNumber class="input-box form-control" id="budgetAmount" placeholder="Enter Budget" @bind-Value="BudgetPlan.BudgetAmount" required />
+                        <InputDate class="form-control" id="startDate" @bind-Value="BudgetPlan.StartDate" required />
+                        <InputDate class="form-control" id="startDate" @bind-Value="BudgetPlan.EndDate" required />
+                    </fieldset>
+                </EditForm>
+
+                <button class="btn btn-primary" type="submit" form="create">Add goal</button>
+
+            </div>
+            </div>
+        } else
+        {
+            <h1> 
+                DEBUGGING! Graphs and filter options will go here!
+                Blazor bootstrap graphs being considered.
+            </h1>
+        }
+    </div>
+
+</div>
+
+
+
+
+@code {
+    Grid<BudgetPlan> grid = default!;
+    private List<BudgetPlan>? goals;
+    private HashSet<BudgetPlan> selectedGoals = new();
+    [SupplyParameterFromForm]
+    private BudgetPlan BudgetPlan { get; set; } = new();
+
+    private int? bankAccountId;
+    private List<BankAccount> BankAccounts { get; set; } = new();
+    private BankAccount? SelectedAccount { get; set; }
+
+    bool isCreationView = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        goals = GetGoals();
+        /* Bank account loading */
+        using var context = DbFactory.CreateDbContext();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            var userEmail = user.FindFirst(ClaimTypes.Name)?.Value;
+            if (!string.IsNullOrEmpty(userEmail))
+            {
+                await LoadBankAccountsForUser(userEmail);
+            }
+        }
+    }
+
+    private List<BudgetPlan> GetGoals()
+    {
+        if(bankAccountId == null)
+        {
+            return new List<BudgetPlan> { };
+        } else
+        {
+            using var context = DbFactory.CreateDbContext();
+            List<BudgetPlan> goals = context.BudgetPlan.Where(x => x.AccountId == bankAccountId).ToList();
+            return goals;
+        }
+    }
+
+    private Task OnSelectedItemsChanged(HashSet<BudgetPlan> goals)
+    {
+        selectedGoals = goals is not null && goals.Any() ? goals : new();
+        return Task.CompletedTask;
+    }
+
+    private async void DeleteSelected()
+    {
+        using var context = DbFactory.CreateDbContext();
+        if(selectedGoals.Count == 0)
+        {
+            // Do nothing, dumb user.
+            return;
+        } else
+        {
+            foreach (var goal in selectedGoals)
+            {
+                var budgetPlan = await context.BudgetPlan.FirstOrDefaultAsync(x => x.BudgetPlanId == goal.BudgetPlanId);
+                if (budgetPlan != null)
+                {
+                    goals.RemoveAll(e => e.BudgetPlanId == goal.BudgetPlanId);
+                    context.BudgetPlan.Remove(budgetPlan);
+                    await context.SaveChangesAsync();
+                } else
+                {
+                    // Do nothing
+                }
+            }
+            selectedGoals.Clear();
+        }
+        await grid.RefreshDataAsync();
+    }
+
+    private async Task OnAccountSelected(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int accountId))
+        {
+            SelectedAccount = BankAccounts.FirstOrDefault(account => account.BankAccountId == accountId);
+            bankAccountId = SelectedAccount.BankAccountId;
+        }
+        selectedGoals.Clear();
+        goals = GetGoals();
+        // This fucking retarded site will not load the correct goals without a double asyncronous refresh
+        // I SPENT OVER A WEEK TRYING TO FIGURE OUT HOW TO FIX THIS
+        // WHY DOES THIS WORK I DONT UNDERSTAAAAAAANNNNNDDDDDD ;_;
+        await grid.RefreshDataAsync();
+        await grid.RefreshDataAsync();
+    }
+
+    private async Task LoadBankAccountsForUser(string email)
+    {
+        using var context = DbFactory.CreateDbContext();
+        var userAccount = await context.UserAccount.FirstOrDefaultAsync(u => u.Email == email);
+
+        if (userAccount != null)
+        {
+            BankAccounts = await context.BankAccount
+                .Where(account => account.UserAccountId == userAccount.UserAccountId)
+                .ToListAsync();
+
+            if (BankAccounts.Any())
+            {
+                SelectedAccount = BankAccounts.First();
+                bankAccountId = SelectedAccount.BankAccountId;
+                goals = GetGoals();
+            }
+        }
+    }
+
+    private async Task AddBudgetPlan()
+    {
+        using var context = DbFactory.CreateDbContext();
+
+        BudgetPlan.AccountId = bankAccountId ?? default(int); // Stupid
+        BudgetPlan.BudgetExpenditures = CalculateTotalExpenditure();
+
+        context.BudgetPlan.Add(BudgetPlan);
+        await context.SaveChangesAsync();
+
+        return;
+    }
+
+    private decimal CalculateTotalExpenditure()
+    {
+        // Possibly move this elsewhere? As a service, or within the model definition?
+        using var context = DbFactory.CreateDbContext();
+
+        decimal totalSpent = context.Transaction
+            .Where(t => t.TransactionDate >= BudgetPlan.StartDate && t.TransactionDate <= BudgetPlan.EndDate)
+            .Sum(t => t.TransactionAmount);
+
+        return totalSpent;
+    }
+
+    private void OnToggleSwitchChange(ChangeEventArgs e)
+    {
+        isCreationView = !(bool)e.Value!;
+        return;
+    }
+
+}

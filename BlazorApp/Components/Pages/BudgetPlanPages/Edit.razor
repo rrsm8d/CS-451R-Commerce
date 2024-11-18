@@ -38,13 +38,13 @@ else
                     <ValidationMessage For="() => BudgetPlan.BudgetExpenditures" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="budgetexpenditures" class="form-label">StartDate:</label>
-                    <InputNumber id="budgetexpenditures" @bind-Value="BudgetPlan.StartDate" class="form-control" />
+                    <label for="startdate" class="form-label">StartDate:</label>
+                    <InputDate id="startdate" @bind-Value="BudgetPlan.StartDate" class="form-control" />
                     <ValidationMessage For="() => BudgetPlan.StartDate" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="budgetexpenditures" class="form-label">EndDate:</label>
-                    <InputNumber id="budgetexpenditures" @bind-Value="BudgetPlan.EndDate" class="form-control" />
+                    <label for="enddate" class="form-label">EndDate:</label>
+                    <InputDate id="enddate" @bind-Value="BudgetPlan.EndDate" class="form-control" />
                     <ValidationMessage For="() => BudgetPlan.EndDate" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>

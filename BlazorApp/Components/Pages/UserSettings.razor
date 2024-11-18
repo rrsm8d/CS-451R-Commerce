@@ -4,6 +4,7 @@
 @inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
 
 <PageTitle>Settings</PageTitle>
 
@@ -45,6 +46,39 @@ else
                 </EditForm>
             </div>
         </div>
+
+        <div class="label-container">
+            <div class="">
+                <h3 class="green-heading">New Bank Account Creation</h3>
+                <EditForm Model="BankAccount" OnValidSubmit="AddBankAccount" FormName="create" Enhance>
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
+
+                    <!-- Account Type Dropdown -->
+                    <div class="mb-3">
+                        <label for="accounttype" class="form-label">Account Type:</label>
+                        <InputSelect id="accounttype" @bind-Value="BankAccount.AccountType" class="form-control">
+                            <option value="Checking">Checking</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Loan">Loan</option>
+                        </InputSelect>
+                        <ValidationMessage For="() => BankAccount.AccountType" class="text-danger" />
+                    </div>
+
+                    <!-- Account Balance Input -->
+                    <div class="mb-3">
+                        <label for="accountbalance" class="form-label">Initial Balance:</label>
+                        <InputNumber id="accountbalance" @bind-Value="BankAccount.AccountBalance" class="form-control" />
+                        <ValidationMessage For="() => BankAccount.AccountBalance" class="text-danger" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Bank Account</button>
+                </EditForm>
+            </div>
+        </div>
+
+
+
     </div>
 }
 
@@ -107,5 +141,23 @@ else
     {
         using var context = DbFactory.CreateDbContext();
         return context.UserAccount.Any(e => e.UserAccountId == useraccountid);
+    }
+
+    // Bank account properties
+    private BankAccount BankAccount { get; set; } = new();
+
+    private async Task AddBankAccount()
+    {
+        using var context = DbFactory.CreateDbContext();
+
+        // Set the UserAccountId from the current user's ID
+        BankAccount.UserAccountId = UserAccountId;
+
+        // Add and save the bank account to the database
+        context.BankAccount.Add(BankAccount);
+        await context.SaveChangesAsync();
+
+        // Optionally, navigate or display success message
+        NavigationManager.NavigateTo("/dashboard");
     }
 }

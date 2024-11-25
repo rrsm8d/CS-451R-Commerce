@@ -31,6 +31,34 @@
     justify-content: space-between !important;
 }
 
+::deep .grid-container {
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    margin-left: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    color: green;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+::deep .chart-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: green;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+::deep .dropdown-goal-container {
+    display: flex;
+    justify-content: center;
+}
+
 .dashboard-container {
     display: flex;
     justify-content: space-between;
@@ -54,7 +82,7 @@
 }
 
 /* Style for the dropdown and other content above the toggle */
-.dropdown-container {
+.dropdown-bank-container {
     margin-bottom: auto; /* Pushes the content above the toggle switch to the top */
 }
 
@@ -118,6 +146,13 @@
     position: relative;
     overflow: hidden;
     z-index: 1; /* Ensure content stays above background */
+}
+
+::deep .progress-bar-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 }
 
 /* Background image for the left section with 20% opacity */

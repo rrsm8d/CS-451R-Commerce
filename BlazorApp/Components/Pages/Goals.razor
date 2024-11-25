@@ -2,6 +2,7 @@
 @using BlazorApp.Models
 @using BlazorApp.Data
 @using Microsoft.EntityFrameworkCore
+@using System.Globalization
 @rendermode InteractiveServer
 @inject IDbContextFactory<BlazorApp.Data.BlazorAppContext> DbFactory
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -13,7 +14,7 @@
     <div class="dashboard-left">
         <h3>Select an account to view</h3>
         <!-- Dropdown menu -->
-        <div class="dropdown-container">
+        <div class="dropdown-bank-container">
             <select @onchange="OnAccountSelected" class="account-dropdown" value="@SelectedAccount?.BankAccountId">
                 @foreach (var account in BankAccounts)
                 {
@@ -35,82 +36,104 @@
 
     <!-- Right Section -->
     <div class="dashboard-right">
-        @if (isCreationView)
-        {
-        <div>
-            <Grid @ref="grid"
-                  TItem="BudgetPlan"
-                  Class="table table-hover table-bordered table-striped"
-                  AllowFiltering="true"
-                  AllowPaging="true"
-                  PageSize="5"
-                  AllowSorting="true"
-                  AllowSelection="true"
-                  SelectionMode="GridSelectionMode.Multiple"
-                  SelectedItemsChanged="OnSelectedItemsChanged"
-                  Data="goals"
-                  Responsive="true">
 
-                <GridColumns>
-                    <GridColumn TItem="BudgetPlan" PropertyName="BudgetPlanId" SortString="BudgetPlanId" SortKeySelector="item => item.BudgetPlanId" HeaderText="Budget ID" HeaderTextAlignment="Alignment.Center">
-                        @context.BudgetPlanId
-                    </GridColumn>
-                    <GridColumn TItem="BudgetPlan" PropertyName="BudgetAmount" SortString="BudgetAmount" SortKeySelector="item => item.BudgetAmount" HeaderText="Set budget">
-                        @context.BudgetAmount
-                    </GridColumn>
-                    <GridColumn TItem="BudgetPlan" PropertyName="BudgetExpenditures" SortString="BudgetExpenditures" SortKeySelector="item => item.BudgetExpenditures" HeaderText="Spent So far" HeaderTextAlignment="Alignment.Center">
-                        @context.BudgetExpenditures
-                    </GridColumn>
-                    <GridColumn TItem="BudgetPlan" PropertyName="StartDate" SortString="StartDate" SortKeySelector="item => item.StartDate" HeaderText="Start Date" HeaderTextAlignment="Alignment.Center">
-                        @context.StartDate
-                    </GridColumn>
-                    <GridColumn TItem="BudgetPlan" PropertyName="EndDate" SortString="EndDate" SortKeySelector="item => item.EndDate" HeaderText="End Date" HeaderTextAlignment="Alignment.End">
-                        @context.EndDate
-                    </GridColumn>
-                </GridColumns>
-            </Grid>
-            <button class="btn btn-primary delete-button" @onclick="DeleteSelected">Delete Selected</button>
-        </div>
-        <!--
-        <div class="mt-3">
-            Selected Items Count: @selectedGoals.Count
-        </div>
+        <div class="grid-container" style="@(!isCreationView ? "display: none;" : "display: flex;")">
+            <div>
+                <Grid @ref="grid"
+                      TItem="BudgetPlan"
+                      Class="table table-hover table-bordered table-striped"
+                      AllowFiltering="true"
+                      AllowPaging="true"
+                      PageSize="5"
+                      AllowSorting="true"
+                      AllowSelection="true"
+                      SelectionMode="GridSelectionMode.Multiple"
+                      SelectedItemsChanged="OnSelectedItemsChanged"
+                      Data="goals"
+                      Responsive="true">
 
-        <div class="mt-2">
-            Selected Goals:
-            <ul>
-                @foreach (var goal in selectedGoals)
-                {
-                    <li>@goal.BudgetPlanId</li>
-                }
-            </ul>
-        </div>
-        -->
-        <div>
-            <h1>Add goal for @SelectedAccount?.AccountType </h1>
-            <div class="form-container">
-
-                <EditForm method="post" class="editform" Model="BudgetPlan" OnValidSubmit="AddBudgetPlan" FormName="create" id="create" Enhance>
-                    <fieldset class="input-field fieldset-container">
-                        <input type="hidden" name="BudgetPlan.AccountId" value="@BudgetPlan.AccountId" />
-                        <input type="hidden" name="BudgetPlan.BudgetExpenditures" value="@BudgetPlan.BudgetExpenditures" />
-                        <InputNumber class="input-box form-control" id="budgetAmount" placeholder="Enter Budget" @bind-Value="BudgetPlan.BudgetAmount" required />
-                        <InputDate class="form-control" id="startDate" @bind-Value="BudgetPlan.StartDate" required />
-                        <InputDate class="form-control" id="startDate" @bind-Value="BudgetPlan.EndDate" required />
-                    </fieldset>
-                </EditForm>
-
-                <button class="btn btn-primary" type="submit" form="create">Add goal</button>
-
+                    <GridColumns>
+                        <GridColumn TItem="BudgetPlan" PropertyName="BudgetPlanId" SortString="BudgetPlanId" SortKeySelector="item => item.BudgetPlanId" HeaderText="Budget ID" HeaderTextAlignment="Alignment.Center">
+                            @context.BudgetPlanId
+                        </GridColumn>
+                        <GridColumn TItem="BudgetPlan" PropertyName="BudgetAmount" SortString="BudgetAmount" SortKeySelector="item => item.BudgetAmount" HeaderText="Set budget">
+                            @context.BudgetAmount
+                        </GridColumn>
+                        <GridColumn TItem="BudgetPlan" PropertyName="BudgetExpenditures" SortString="BudgetExpenditures" SortKeySelector="item => item.BudgetExpenditures" HeaderText="Spent So far" HeaderTextAlignment="Alignment.Center">
+                            @context.BudgetExpenditures
+                        </GridColumn>
+                        <GridColumn TItem="BudgetPlan" PropertyName="StartDate" SortString="StartDate" SortKeySelector="item => item.StartDate" HeaderText="Start Date" HeaderTextAlignment="Alignment.Center">
+                            @context.StartDate
+                        </GridColumn>
+                        <GridColumn TItem="BudgetPlan" PropertyName="EndDate" SortString="EndDate" SortKeySelector="item => item.EndDate" HeaderText="End Date" HeaderTextAlignment="Alignment.End">
+                            @context.EndDate
+                        </GridColumn>
+                    </GridColumns>
+                </Grid>
+                <button class="btn btn-primary delete-button" @onclick="DeleteSelected">Delete Selected</button>
             </div>
+            <!--
+            <div class="mt-3">
+                Selected Items Count: @selectedGoals.Count
             </div>
-        } else
-        {
-            <h1> 
-                DEBUGGING! Graphs and filter options will go here!
-                Blazor bootstrap graphs being considered.
-            </h1>
-        }
+
+            <div class="mt-2">
+                Selected Goals:
+                <ul>
+                    @foreach (var goal in selectedGoals)
+                    {
+                        <li>@goal.BudgetPlanId</li>
+                    }
+                </ul>
+            </div>
+            -->
+            <div>
+                <h1>Add goal for @SelectedAccount?.AccountType </h1>
+                <div class="form-container">
+
+                    <EditForm method="post" class="editform" Model="BudgetPlan" OnValidSubmit="AddBudgetPlan" FormName="create" id="create" Enhance>
+                        <fieldset class="input-field fieldset-container">
+                            <input type="hidden" name="BudgetPlan.AccountId" value="@BudgetPlan.AccountId" />
+                            <input type="hidden" name="BudgetPlan.BudgetExpenditures" value="@BudgetPlan.BudgetExpenditures" />
+                            <label for="budgetAmount">Budget Amount: </label>
+                            <InputNumber class="input-box form-control" id="budgetAmount" placeholder="Enter Budget" @bind-Value="BudgetPlan.BudgetAmount" required />
+                            <label for="startDate">Start Date: </label>
+                            <InputDate class="form-control" id="startDate" @bind-Value="BudgetPlan.StartDate" required />
+                            <label for="endDate">End Date: </label>
+                            <InputDate class="form-control" id="endDate" @bind-Value="BudgetPlan.EndDate" required />
+                        </fieldset>
+                    </EditForm>
+
+                    <button class="btn btn-primary" type="submit" form="create">Add goal</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container" style="@(!isCreationView ? "display: flex;" : "display: none;")">
+
+            <div>
+                <PieChart @ref="pieChart" Width="500" />
+                <div class="dropdown-goal-container">
+                    <select @onchange="OnGoalSelected" class="account-dropdown" value="@selectedGoal?.BudgetPlanId">
+                        @foreach (var goal in goals)
+                        {
+                            <option value="@goal.BudgetPlanId">Goal: @goal.BudgetPlanId</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <!-- TO-DO: Fill this with anything else. It feels too empty -->
+                <h3>@(selectedGoal != null ? $"Current progress for Goal #{selectedGoal.BudgetPlanId}:" : "No Goal selected")</h3>
+                <Progress Class="mb-3" Height="20">
+                    <ProgressBar Width="@width" Label="@label" Type="progressType" Color="progressColor" />
+                </Progress>
+            </div>
+
+        </div>
+
     </div>
 
 </div>
@@ -119,8 +142,14 @@
 
 
 @code {
+    /*
+     * HOLY SPAGHETTI CODE I don't care I just want this dooooone
+     * Try to not learn from this...
+     */
+    
     Grid<BudgetPlan> grid = default!;
     private List<BudgetPlan>? goals;
+    private BudgetPlan? selectedGoal;
     private HashSet<BudgetPlan> selectedGoals = new();
     [SupplyParameterFromForm]
     private BudgetPlan BudgetPlan { get; set; } = new();
@@ -128,6 +157,12 @@
     private int? bankAccountId;
     private List<BankAccount> BankAccounts { get; set; } = new();
     private BankAccount? SelectedAccount { get; set; }
+
+    private List<Transaction>? transactionList;
+    private Dictionary<string, decimal> TransactionTotals = new();
+
+    private DateTime goalStartDate = DateTime.MinValue;
+    private DateTime goalEndDate = DateTime.MaxValue;
 
     bool isCreationView = true;
 
@@ -139,6 +174,7 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
+
         if (user.Identity?.IsAuthenticated == true)
         {
             var userEmail = user.FindFirst(ClaimTypes.Name)?.Value;
@@ -147,6 +183,17 @@
                 await LoadBankAccountsForUser(userEmail);
             }
         }
+
+        /* Pie chart data */
+        backgroundColors = ColorUtility.CategoricalTwelveColors; // Colors
+        chartData = new ChartData { Labels = GetTransactionDataLabels(4), Datasets = GetTransactionDataSets(1) }; // The number of different colors, Set (Only need one, for our transactions)
+
+        pieChartOptions = new();
+        pieChartOptions.Responsive = true;
+        pieChartOptions.Plugins.Title!.Text = "Top 5 expenditures";
+        pieChartOptions.Plugins.Title.Display = true;
+
+        var updatedSum = TransactionTotals.Values.Sum();
     }
 
     private List<BudgetPlan> GetGoals()
@@ -158,6 +205,7 @@
         {
             using var context = DbFactory.CreateDbContext();
             List<BudgetPlan> goals = context.BudgetPlan.Where(x => x.AccountId == bankAccountId).ToList();
+
             return goals;
         }
     }
@@ -204,6 +252,18 @@
         }
         selectedGoals.Clear();
         goals = GetGoals();
+        if(goals.Count() == 0 || goals == null)
+        {
+            selectedGoal = null;
+            goalStartDate = DateTime.MinValue;
+            goalEndDate = DateTime.MaxValue;
+        } else
+        {
+            selectedGoal = goals.First();
+            goalStartDate = selectedGoal.StartDate;
+            goalEndDate = selectedGoal.EndDate;
+        }
+        await UpdatePieChart();
         // This fucking retarded site will not load the correct goals without a double asyncronous refresh
         // I SPENT OVER A WEEK TRYING TO FIGURE OUT HOW TO FIX THIS
         // WHY DOES THIS WORK I DONT UNDERSTAAAAAAANNNNNDDDDDD ;_;
@@ -227,6 +287,10 @@
                 SelectedAccount = BankAccounts.First();
                 bankAccountId = SelectedAccount.BankAccountId;
                 goals = GetGoals();
+                transactionList = await context.Transaction
+                .Where(t => t.AccountId == bankAccountId)
+                .OrderBy(t => t.TransactionAmount)
+                .ToListAsync();
             }
         }
     }
@@ -262,4 +326,335 @@
         return;
     }
 
+    // ----------- PIE CHART ------------ //
+    /* Its all downhill from here. Fucking AWFUL spaghetti code just to get shit working */
+
+    private PieChart pieChart = default!;
+    private PieChartOptions pieChartOptions = default!;
+    private ChartData chartData = default!;
+    private string[]? backgroundColors;
+
+    private int datasetsCount = 0;
+    private int dataLabelsCount = 0;
+
+    private Random random = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (goals.Count() == 0 || goals == null)
+        {
+            selectedGoal = null;
+            goalStartDate = DateTime.MinValue;
+            goalEndDate = DateTime.MaxValue;
+            UpdateProgress(0.0);
+        } else
+        {
+            selectedGoal = goals.First();
+            width = CalculateWidth();
+            UpdateProgress(width);
+        }
+        if (firstRender)
+        {
+            await pieChart.InitializeAsync(chartData, pieChartOptions);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    /* Button functions */
+    private async Task RandomizeAsync()
+    {
+        if (chartData is null || chartData.Datasets is null || !chartData.Datasets.Any()) return;
+
+        var newDatasets = new List<IChartDataset>();
+
+        foreach (var dataset in chartData.Datasets)
+        {
+            if (dataset is PieChartDataset pieChartDataset
+                && pieChartDataset is not null
+                && pieChartDataset.Data is not null)
+            {
+                var count = pieChartDataset.Data.Count;
+
+                var newData = new List<double?>();
+                for (var i = 0; i < count; i++)
+                {
+                    newData.Add(random.Next(0, 100));
+                }
+
+                pieChartDataset.Data = newData;
+                newDatasets.Add(pieChartDataset);
+            }
+        }
+
+        chartData.Datasets = newDatasets;
+
+        await pieChart.UpdateAsync(chartData, pieChartOptions);
+    }
+
+    private async Task AddDatasetAsync()
+    {
+        if (chartData is null || chartData.Datasets is null) return;
+
+        var chartDataset = GetRandomPieChartDataset();
+        chartData = await pieChart.AddDatasetAsync(chartData, chartDataset, pieChartOptions);
+    }
+
+    private async Task AddDataAsync()
+    {
+        if (dataLabelsCount >= 12)
+            return;
+
+        if (chartData is null || chartData.Datasets is null)
+            return;
+
+        var data = new List<IChartDatasetData>();
+        foreach (var dataset in chartData.Datasets)
+        {
+            if (dataset is PieChartDataset pieChartDataset)
+                data.Add(new PieChartDatasetData(pieChartDataset.Label, random.Next(0, 100), backgroundColors![dataLabelsCount]));
+        }
+
+        chartData = await pieChart.AddDataAsync(chartData, GetNextDataLabel(), data);
+
+        dataLabelsCount += 1;
+    }
+
+    private async Task OnGoalSelected(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int goalId))
+        {
+            selectedGoal = goals.FirstOrDefault(goal => goal.BudgetPlanId == goalId);
+            goalStartDate = selectedGoal.StartDate;
+            goalEndDate = selectedGoal.EndDate;
+
+        }
+        // Again, I don't understand why it needs double refreshes...
+        await UpdatePieChart();
+    }
+
+    private async Task UpdatePieChart()
+    {
+        if(selectedGoal == null)
+        {
+            chartData = new ChartData { Labels = GetNullDataLabels(2), Datasets = GetNullDataSets(1) }; // The number of different colors, Set (Only need one, for our transactions)
+        } else
+        {            
+            chartData = new ChartData { Labels = GetTransactionDataLabels(4), Datasets = GetTransactionDataSets(1) }; // The number of different colors, Set (Only need one, for our transactions)
+        }
+        await pieChart.UpdateAsync(chartData, pieChartOptions);
+    }
+
+    /* Data */
+    #region Data Preparation
+
+    private List<IChartDataset> GetDefaultDataSets(int numberOfDatasets)
+    {
+        var datasets = new List<IChartDataset>();
+
+        for (var index = 0; index < numberOfDatasets; index++)
+        {
+            datasets.Add(GetRandomPieChartDataset());
+        }
+
+        return datasets;
+    }
+
+    private PieChartDataset GetRandomPieChartDataset()
+    {
+        datasetsCount += 1;
+        // Label: What displays when you hover on the chart's color
+        // Data: 
+        // BackgroundColor: Self-explanatory
+        return new() { Label = $"Team {datasetsCount}", Data = GetRandomData(), BackgroundColor = GetRandomBackgroundColors() };
+    }
+
+    private List<double?> GetRandomData()
+    {
+        var data = new List<double?>();
+        for (var index = 0; index < dataLabelsCount; index++)
+        {
+            data.Add(random.Next(0, 100));
+        }
+
+        return data;
+    }
+
+    private List<string> GetRandomBackgroundColors()
+    {
+        var colors = new List<string>();
+        for (var index = 0; index < dataLabelsCount; index++)
+        {
+            colors.Add(backgroundColors![index]);
+        }
+
+        return colors;
+    }
+
+    private List<string> GetDefaultDataLabels(int numberOfLabels)
+    {
+        var labels = new List<string>();
+        for (var index = 0; index < numberOfLabels; index++)
+        {
+            labels.Add(GetNextDataLabel());
+            dataLabelsCount += 1;
+        }
+
+        return labels;
+    }
+
+    private string GetNextDataLabel() => $"Product {dataLabelsCount + 1}";
+
+    private string GetNextDataBackgrounfColor() => backgroundColors![dataLabelsCount];
+
+    /* Custom Data for transactions */
+
+    /* Why did I make this fucking fuck */
+    /* Maybe it can be redeemed... Show it right next to your goal's progress. Show what merchants are taking the most of your money!!! */
+    private List<string> GetTransactionDataLabels(int numberOfLabels)
+    {
+        using var context = DbFactory.CreateDbContext();
+        dataLabelsCount = 0;
+        var labels = new List<string>();
+        TransactionTotals = new();
+        foreach (var transaction in transactionList)
+        {
+            if ((TransactionTotals.ContainsKey(transaction.Merchant)) && (transaction.TransactionDate > goalStartDate) && (transaction.TransactionDate  < goalEndDate))
+            {
+                TransactionTotals[transaction.Merchant] += transaction.TransactionAmount; // Increment total amount
+            }
+            else if ((!TransactionTotals.ContainsKey(transaction.Merchant)) && (transaction.TransactionDate > goalStartDate) && (transaction.TransactionDate < goalEndDate))
+            {
+                TransactionTotals[transaction.Merchant] = transaction.TransactionAmount; // Add new key with initial amount
+            }
+        }
+        var SortedTransactionTotals = TransactionTotals
+        .OrderByDescending(kvp => kvp.Value) // Change to OrderBy(kvp => kvp.Value) for ascending order
+        .Take(numberOfLabels)
+        .ToList();
+        // If there are more transaction merchants than the given number of labels, only show the highest ones
+        foreach (var transactionTotal in SortedTransactionTotals)
+        {
+            labels.Add($"{transactionTotal.Key}");
+            dataLabelsCount += 1; // What the hell is this used for
+        }
+
+        return labels;
+    }
+
+    private List<string> GetNullDataLabels(int numberOfLabels)
+    {
+        dataLabelsCount = numberOfLabels;
+        var labels = new List<string>();
+        labels.Add("No goals for account...");
+        labels.Add("Select something else");
+        return labels;
+    }
+
+    // Multiple
+    private List<IChartDataset> GetTransactionDataSets(int numberOfDatasets)
+    {
+        var datasets = new List<IChartDataset>();
+        PieChartDataset temp = new() { Label = "$", Data = GetTransactionData(), BackgroundColor = GetRandomBackgroundColors() };
+        for (var index = 0; index < numberOfDatasets; index++)
+        {
+            datasets.Add(temp);
+        }
+
+        return datasets;
+    }
+
+    private List<IChartDataset> GetNullDataSets(int numberOfDatasets)
+    {
+        var datasets = new List<IChartDataset>();
+        var data = new List<double?>();
+        data.Add(1.0);
+        data.Add(1.0);
+        PieChartDataset temp = new() { Label = "No Goals Available", Data = data, BackgroundColor = GetRandomBackgroundColors() };
+        for (var index = 0; index < numberOfDatasets; index++)
+        {
+            datasets.Add(temp);
+        }
+
+        return datasets;
+    }
+
+    private List<double?> GetTransactionData()
+    {
+        var temp = TransactionTotals
+        .OrderByDescending(kvp => kvp.Value) // Change to OrderBy(kvp => kvp.Value) for ascending order
+        .Take(4)
+        .ToList();
+        var data = new List<double?>();
+        foreach (var transactionTotal in temp)
+        {
+            data.Add((double) transactionTotal.Value);
+        }
+
+        return data;
+    }
+
+    #endregion  Data Preparation
+
+    // --------- PROGRESS BAR ---------
+    private double width = 0.0;
+    private string label = "0%";
+    private ProgressType progressType = ProgressType.StripedAndAnimated;
+    private ProgressColor progressColor = ProgressColor.Secondary;
+
+    private void UpdateProgress(double w)
+    {
+        if (w >= 100)
+        {
+            width = 100.0;
+            label = $"{width.ToString(CultureInfo.InvariantCulture)}%";
+            progressType = ProgressType.Striped;
+            progressColor = ProgressColor.Danger;
+        }
+        else if (w > 66 && w < 100)
+        {
+            width = w;
+            label = $"{width.ToString(CultureInfo.InvariantCulture)}%";
+            progressType = ProgressType.StripedAndAnimated;
+            progressColor = ProgressColor.Warning;
+        }
+        else if (w <= 66 && w > 33)
+        {
+            width = w;
+            label = $"{width.ToString(CultureInfo.InvariantCulture)}%";
+            progressType = ProgressType.StripedAndAnimated;
+            progressColor = ProgressColor.Secondary;
+        }
+        else if (w <= 33 && w > 0)
+        {
+            width = w;
+            label = $"{width.ToString(CultureInfo.InvariantCulture)}%";
+            progressType = ProgressType.StripedAndAnimated;
+            progressColor = ProgressColor.Secondary;
+        }
+        else if (w <= 0)
+        {
+            width = w;
+            label = $"{width.ToString(CultureInfo.InvariantCulture)}%";
+            progressType = ProgressType.Striped;
+            progressColor = ProgressColor.Success;
+        }
+    }
+
+    private double CalculateWidth()
+    {
+        /* // Retarded and outdated 
+            if (selectedGoal != null)
+            {
+            double temp = 0.0;
+            foreach (var transaction in transactionList)
+                {
+                temp += ((double)transaction.TransactionAmount);
+            }
+            return ( (temp / ((double) selectedGoal.BudgetAmount)) * 100.0);
+        }
+        else return 0.0;
+        */
+        double percentage = ((double) (selectedGoal.BudgetExpenditures / selectedGoal.BudgetAmount) * 100);
+        return percentage;
+    }
 }

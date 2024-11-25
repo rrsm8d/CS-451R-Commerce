@@ -1,37 +1,74 @@
 @page "/Recovery"
 
 @using System.ComponentModel.DataAnnotations
+@using Twilio;
+@using Twilio.Rest.Verify.V2.Service;
+@rendermode InteractiveServer
 
 <PageTitle>Recovery</PageTitle>
 
 <div class="recovery-container">
     <h2>Account Recovery</h2>
     <p>Please enter your email address to receive a password reset link.</p>
-    <EditForm Model="@RecoveryModel" OnValidSubmit="HandleRecovery">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
 
-        <div class="input-group">
-            @* <label for="email">Email</label> *@
-            <InputText placeholder='Email' id="email" class="form-control input-field" @bind-Value="RecoveryModel.Email" />
-        </div>
+    <div class="input-group">
+        <input type="email" placeholder="Email" class="form-control" @bind="UserEmail" />
+    </div>
 
-        <button type="submit" class="btn btn-primary">Send Recovery Email</button>
-    </EditForm>
+    <button class="btn btn-primary" @onclick="HandleRecovery">Send Recovery Email</button>
     <a href="/login" class="back-link">Back to Login</a>
 </div>
 
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-info">@Message</div>
+}
+
 @code {
-    private RecoveryFormModel RecoveryModel = new RecoveryFormModel();
+    private string UserEmail { get; set; } = string.Empty; // Stores user input email
+    private string Message { get; set; } // For success or error messages
+
     private async Task HandleRecovery()
     {
-        // Your password recovery logic here
+        if (string.IsNullOrEmpty(UserEmail) || !IsValidEmail(UserEmail))
+        {
+            Message = "Please enter a valid email address.";
+            return;
+        }
+
+        // Initialize Twilio with Account SID and Auth Token
+        string accountSid = "ACd867838db425498a01963f9362bf4efe"; // Replace with your Account SID
+        string authToken = "509d0aa01864a5e90d524cef24e7ba9c";   // Replace with your Auth Token
+
+        TwilioClient.Init(accountSid, authToken);
+
+        try
+        {
+            // Create a verification
+            var verification = await VerificationResource.CreateAsync(
+                channel: "email",
+                to: UserEmail,
+                pathServiceSid: "VA28de569231d1b0f7f2930ec95a75e51c" // Replace with your Service SID
+            );
+
+            Message = $"A recovery email has been sent to {UserEmail}.";
+        }
+        catch (Exception ex)
+        {
+            Message = $"An error occurred: {ex.Message}";
+        }
     }
 
-    public class RecoveryFormModel
+    private bool IsValidEmail(string email)
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

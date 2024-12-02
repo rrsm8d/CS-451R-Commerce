@@ -1,0 +1,72 @@
+@page "/chatbot"
+
+@inject BlazorApp.Services.OllamaService OllamaService
+
+<h3 class="heading" >Chatbot</h3>
+
+<div class="chat-container">
+    @if (IsBotTyping)
+    {
+        <p>Bot is typing...</p>
+    }
+
+    @foreach (var message in ChatMessages)
+    {
+        <div class="message @(message.Sender == "You" ? "user-message" : "bot-message")">
+            <strong>@message.Sender:</strong> @message.Text
+        </div>
+    }
+</div>
+
+<div class="input-area">
+    <textarea @bind="UserInput" placeholder="Type your message here..." rows="3"></textarea>
+    <button @onclick="SendMessage"> Send</button>
+
+
+
+
+
+</div>
+
+@code {
+    private string UserInput { get; set; } = string.Empty;
+    private List<(string Sender, string Text)> ChatMessages { get; set; } = new();
+    private bool IsBotTyping { get; set; } = false; // Add this declaration
+
+    private async Task SendMessage()
+    {
+        Console.WriteLine("Button clicked!");
+        if (!string.IsNullOrWhiteSpace(UserInput))
+        {
+            ChatMessages.Add(("You", UserInput));
+            var prompt = UserInput;
+            UserInput = string.Empty;
+
+            IsBotTyping = true; // Set typing indicator
+            StateHasChanged(); // Trigger UI update
+
+            ChatMessages.Add(("Bot", "Typing..."));
+            var botIndex = ChatMessages.Count - 1;
+
+            try
+            {
+                var botResponse = await GenerateResponseAsync(prompt);
+                ChatMessages[botIndex] = ("Bot", botResponse);
+            }
+            catch (Exception ex)
+            {
+                ChatMessages[botIndex] = ("Bot", $"Error: {ex.Message}");
+            }
+
+            IsBotTyping = false; // Reset typing indicator
+            StateHasChanged(); // Trigger UI update
+        }
+    }
+
+    private async Task<string> GenerateResponseAsync(string prompt)
+    {
+        // Simulate a delay to mimic bot processing
+        await Task.Delay(1000);
+        return "This is a bot response!";
+    }
+}

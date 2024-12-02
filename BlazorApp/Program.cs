@@ -16,6 +16,12 @@ builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
+builder.Services.AddSingleton<BlazorApp.Services.OllamaService>();
+
+
+
+
 // Authentication?
 // I was following this video here: https://www.youtube.com/watch?v=GKvEuA80FAE
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

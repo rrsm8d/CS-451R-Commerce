@@ -120,7 +120,7 @@
                     <select @onchange="OnGoalSelected" class="account-dropdown" value="@selectedGoal?.BudgetPlanId">
                         @foreach (var goal in goals)
                         {
-                            <option value="@goal.BudgetPlanId">Goal: @goal.BudgetPlanId</option>
+                            <option value="@goal.BudgetPlanId">Goal: @goal.BudgetName</option>
                         }
                     </select>
                 </div>
@@ -128,7 +128,7 @@
 
             <div class="progress-bar-container">
                 <!-- TO-DO: Fill this with anything else. It feels too empty -->
-                <h3>@(selectedGoal != null ? $"Current progress for Goal #{selectedGoal.BudgetPlanId}:" : "No Goal selected")</h3>
+                <h3>@(selectedGoal != null ? $"Current progress for Goal #{selectedGoal.BudgetName}:" : "No Goal selected")</h3>
                 <Progress Class="mb-3" Height="20">
                     <ProgressBar Width="@width" Label="@label" Type="progressType" Color="progressColor" />
                 </Progress>
@@ -307,6 +307,8 @@
         context.BudgetPlan.Add(BudgetPlan);
         await context.SaveChangesAsync();
 
+        await grid.RefreshDataAsync();
+
         return;
     }
 
@@ -432,6 +434,8 @@
         }
         // Again, I don't understand why it needs double refreshes...
         await UpdatePieChart();
+        width = CalculateWidth();
+        UpdateProgress(width);
     }
 
     private async Task UpdatePieChart()
@@ -660,6 +664,7 @@
         else return 0.0;
         */
         double percentage = ((double) (selectedGoal.BudgetExpenditures / selectedGoal.BudgetAmount) * 100);
+        percentage = Math.Round(percentage, 2);
         return percentage;
     }
 }

@@ -7,6 +7,7 @@ namespace BlazorApp.Models
     {
         public int BudgetPlanId { get; set; } // Primary key
         public int AccountId { get; set; } // Foreign Key
+        public string BudgetName { get; set; }
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal BudgetAmount { get; set; }
@@ -15,6 +16,5 @@ namespace BlazorApp.Models
         public decimal BudgetExpenditures { get; set; } // Total spent so far
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
     }
 }

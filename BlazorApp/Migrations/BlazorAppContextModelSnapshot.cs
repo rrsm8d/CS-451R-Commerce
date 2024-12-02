@@ -63,6 +63,10 @@ namespace BlazorApp.Migrations
                     b.Property<decimal>("BudgetExpenditures")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<string>("BudgetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 

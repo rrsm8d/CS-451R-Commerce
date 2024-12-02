@@ -31,7 +31,7 @@
                 <span class="toggle-switch-text" data-view="graphical">Summary</span>
             </label>
         </div>
-        
+
     </div>
 
     <!-- Right Section -->
@@ -40,21 +40,21 @@
         <div class="grid-container" style="@(!isCreationView ? "display: none;" : "display: flex;")">
             <div>
                 <Grid @ref="grid"
-                      TItem="BudgetPlan"
-                      Class="table table-hover table-bordered table-striped"
-                      AllowFiltering="true"
-                      AllowPaging="true"
-                      PageSize="5"
-                      AllowSorting="true"
-                      AllowSelection="true"
-                      SelectionMode="GridSelectionMode.Multiple"
-                      SelectedItemsChanged="OnSelectedItemsChanged"
-                      Data="goals"
-                      Responsive="true">
+                TItem="BudgetPlan"
+                Class="table table-hover table-bordered table-striped"
+                AllowFiltering="true"
+                AllowPaging="true"
+                PageSize="5"
+                AllowSorting="true"
+                AllowSelection="true"
+                SelectionMode="GridSelectionMode.Multiple"
+                SelectedItemsChanged="OnSelectedItemsChanged"
+                Data="goals"
+                Responsive="true">
 
                     <GridColumns>
-                        <GridColumn TItem="BudgetPlan" PropertyName="BudgetPlanId" SortString="BudgetPlanId" SortKeySelector="item => item.BudgetPlanId" HeaderText="Budget ID" HeaderTextAlignment="Alignment.Center">
-                            @context.BudgetPlanId
+                        <GridColumn TItem="BudgetPlan" PropertyName="BudgetName" SortString="BudgetName" SortKeySelector="item => item.BudgetName" HeaderText="Budget Name" HeaderTextAlignment="Alignment.Center">
+                            @context.BudgetName
                         </GridColumn>
                         <GridColumn TItem="BudgetPlan" PropertyName="BudgetAmount" SortString="BudgetAmount" SortKeySelector="item => item.BudgetAmount" HeaderText="Set budget">
                             @context.BudgetAmount
@@ -74,17 +74,17 @@
             </div>
             <!--
             <div class="mt-3">
-                Selected Items Count: @selectedGoals.Count
+            Selected Items Count: @selectedGoals.Count
             </div>
 
             <div class="mt-2">
-                Selected Goals:
-                <ul>
-                    @foreach (var goal in selectedGoals)
-                    {
-                        <li>@goal.BudgetPlanId</li>
-                    }
-                </ul>
+            Selected Goals:
+            <ul>
+            @foreach (var goal in selectedGoals)
+            {
+            <li>@goal.BudgetPlanId</li>
+            }
+            </ul>
             </div>
             -->
             <div>
@@ -95,6 +95,8 @@
                         <fieldset class="input-field fieldset-container">
                             <input type="hidden" name="BudgetPlan.AccountId" value="@BudgetPlan.AccountId" />
                             <input type="hidden" name="BudgetPlan.BudgetExpenditures" value="@BudgetPlan.BudgetExpenditures" />
+                            <label for="budgetName">Budget Name: </label>
+                            <InputText class="input-box form-control" id="budgetName" placeholder="Name" @bind-Value="BudgetPlan.BudgetName" required />
                             <label for="budgetAmount">Budget Amount: </label>
                             <InputNumber class="input-box form-control" id="budgetAmount" placeholder="Enter Budget" @bind-Value="BudgetPlan.BudgetAmount" required />
                             <label for="startDate">Start Date: </label>
@@ -142,11 +144,11 @@
 
 
 @code {
-    /*
+     /*
      * HOLY SPAGHETTI CODE I don't care I just want this dooooone
      * Try to not learn from this...
      */
-    
+
     Grid<BudgetPlan> grid = default!;
     private List<BudgetPlan>? goals;
     private BudgetPlan? selectedGoal;
@@ -509,36 +511,39 @@
     /* Custom Data for transactions */
 
     /* Why did I make this fucking fuck */
-    /* Maybe it can be redeemed... Show it right next to your goal's progress. Show what merchants are taking the most of your money!!! */
     private List<string> GetTransactionDataLabels(int numberOfLabels)
     {
         using var context = DbFactory.CreateDbContext();
         dataLabelsCount = 0;
         var labels = new List<string>();
         TransactionTotals = new();
-        foreach (var transaction in transactionList)
+        if (transactionList != null)
         {
-            if ((TransactionTotals.ContainsKey(transaction.Merchant)) && (transaction.TransactionDate > goalStartDate) && (transaction.TransactionDate  < goalEndDate))
+            foreach (var transaction in transactionList)
             {
-                TransactionTotals[transaction.Merchant] += transaction.TransactionAmount; // Increment total amount
+                if ((TransactionTotals.ContainsKey(transaction.Merchant)) && (transaction.TransactionDate > goalStartDate) && (transaction.TransactionDate < goalEndDate))
+                {
+                    TransactionTotals[transaction.Merchant] += transaction.TransactionAmount; // Increment total amount
+                }
+                else if ((!TransactionTotals.ContainsKey(transaction.Merchant)) && (transaction.TransactionDate > goalStartDate) && (transaction.TransactionDate < goalEndDate))
+                {
+                    TransactionTotals[transaction.Merchant] = transaction.TransactionAmount; // Add new key with initial amount
+                }
             }
-            else if ((!TransactionTotals.ContainsKey(transaction.Merchant)) && (transaction.TransactionDate > goalStartDate) && (transaction.TransactionDate < goalEndDate))
+            var SortedTransactionTotals = TransactionTotals
+            .OrderByDescending(kvp => kvp.Value) // Change to OrderBy(kvp => kvp.Value) for ascending order
+            .Take(numberOfLabels)
+            .ToList();
+            // If there are more transaction merchants than the given number of labels, only show the highest ones
+            foreach (var transactionTotal in SortedTransactionTotals)
             {
-                TransactionTotals[transaction.Merchant] = transaction.TransactionAmount; // Add new key with initial amount
+                labels.Add($"{transactionTotal.Key}");
+                dataLabelsCount += 1; // What the hell is this used for
             }
+            return labels;
+        } else {
+            return labels;
         }
-        var SortedTransactionTotals = TransactionTotals
-        .OrderByDescending(kvp => kvp.Value) // Change to OrderBy(kvp => kvp.Value) for ascending order
-        .Take(numberOfLabels)
-        .ToList();
-        // If there are more transaction merchants than the given number of labels, only show the highest ones
-        foreach (var transactionTotal in SortedTransactionTotals)
-        {
-            labels.Add($"{transactionTotal.Key}");
-            dataLabelsCount += 1; // What the hell is this used for
-        }
-
-        return labels;
     }
 
     private List<string> GetNullDataLabels(int numberOfLabels)

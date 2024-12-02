@@ -28,6 +28,11 @@ else
                     <ValidationMessage For="() => BudgetPlan.AccountId" class="text-danger" />
                 </div>
                 <div class="mb-3">
+                    <label for="budgetname" class="form-label">Budget Name:</label>
+                    <InputText id="budgetname" @bind-Value="BudgetPlan.BudgetName" class="form-control" />
+                    <ValidationMessage For="() => BudgetPlan.BudgetName" class="text-danger" />
+                </div>
+                <div class="mb-3">
                     <label for="budgetamount" class="form-label">BudgetAmount:</label>
                     <InputNumber id="budgetamount" @bind-Value="BudgetPlan.BudgetAmount" class="form-control" />
                     <ValidationMessage For="() => BudgetPlan.BudgetAmount" class="text-danger" />

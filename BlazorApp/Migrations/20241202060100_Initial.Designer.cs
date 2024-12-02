@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorApp.Migrations
 {
     [DbContext(typeof(BlazorAppContext))]
-    [Migration("20241105154726_UserAccountUpdate")]
-    partial class UserAccountUpdate
+    [Migration("20241202060100_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,10 @@ namespace BlazorApp.Migrations
 
                     b.Property<decimal>("BudgetExpenditures")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("BudgetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");

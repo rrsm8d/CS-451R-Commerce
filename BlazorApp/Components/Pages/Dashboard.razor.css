@@ -401,3 +401,10 @@
     color: #007AA3; /* Color for the "..." */
     font-size: 18px;
 }
+
+.bargraph-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+}

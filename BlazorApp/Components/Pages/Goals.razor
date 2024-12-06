@@ -128,7 +128,7 @@
 
             <div class="progress-bar-container">
                 <!-- TO-DO: Fill this with anything else. It feels too empty -->
-                <h3>@(selectedGoal != null ? $"Current progress for Goal #{selectedGoal.BudgetName}:" : "No Goal selected")</h3>
+                <h3>@(selectedGoal != null ? $"Current progress for Goal - {selectedGoal.BudgetName}:" : "No Goal selected")</h3>
                 <Progress Class="mb-3" Height="20">
                     <ProgressBar Width="@width" Label="@label" Type="progressType" Color="progressColor" />
                 </Progress>
